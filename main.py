@@ -5,9 +5,11 @@ from GUI.ScreenManager import ScreenManager
 
 Window.size = (500, 600)
 
-class VocabulayTrainerApp(MDApp):
+
+class VocabularyTrainerApp(MDApp):
     def build(self):
         return ScreenManager()
 
+
 if __name__ == '__main__':
-    VocabulayTrainerApp().run()
+    VocabularyTrainerApp().run()

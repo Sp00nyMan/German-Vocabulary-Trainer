@@ -1,3 +1,5 @@
+from os import path
+
 from kivy.lang import Builder
 from kivymd.uix.button import MDRectangleFlatButton
 from kivymd.uix.screen import MDScreen
@@ -7,8 +9,10 @@ import DataLoader
 
 class MainMenuScreen(MDScreen):
     NAME = "MAIN_MENU"
+
     def __init__(self):
-        Builder.load_file("E:\My Drive\Deutsch\Vocabulary Trainer\GUI\layouts\main_menu.kv")
+        p = path.join(path.dirname(__file__), r"..\layouts\main_menu.kv")
+        Builder.load_file(p)
         super().__init__(name=self.NAME)
         self._load_buttons()
 

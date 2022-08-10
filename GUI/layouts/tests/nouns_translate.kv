@@ -1,0 +1,27 @@
+#:include GUI/layouts/header.kv
+
+<TestScreen>:
+    MDBoxLayout:
+        orientation: 'vertical'
+
+        Header:
+
+        MDBoxLayout:
+            orientation: 'horizontal'
+            spacing: dp(20)
+
+            MDTextField:
+                id: genus
+                hint_text: 'Genus'
+
+            MDTextField:
+                id: singular
+                hint_text: 'Singular'
+
+            MDLabel:
+                id: translation
+                text: 'Translation'
+
+        MDRectangleFlatButton:
+            text: 'SUBMIT'
+            on_release: root.on_submit(genus.text, singular.text)
