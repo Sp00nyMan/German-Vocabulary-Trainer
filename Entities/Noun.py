@@ -13,10 +13,10 @@ class Gender(Enum):
 
 class Noun(Word):
 
-    def __init__(self, gender: Gender, singular: str, plural: str, translation: str, comparison_function=None):
-        super().__init__(translation, comparison_function)
-        self._gender = Gender(gender)
-        self._singular = singular.strip().lower()
+    def __init__(self, gender: Gender, singular: str, plural: str, translation: str):
+        super().__init__(translation)
+        self._gender = Gender(gender) if singular else None
+        self._singular = singular.strip().lower() if singular else None
         self._plural = plural.strip().lower() if plural else None
 
     @property

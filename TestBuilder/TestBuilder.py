@@ -1,37 +1,40 @@
-import pandas as pd
+import os
+
+from kivy.lang import Builder
 from kivymd.uix.screen import MDScreen
 
-import DataLoader as dl
-from Entities import Noun, Word
+from Entities import Word
+from .Tests import NounsTranslate
 
 
 class TestBuilder:
+    test_layouts = r"GUI\layouts\tests"
 
-    def __init__(self, test_screen: MDScreen, mode: str):
-        self._test_screen = test_screen
-        self._dictionary: pd.DataFrame = None
-
+    def __init__(self, mode: str, test_screen: MDScreen):
         match mode.lower():
             case "nouns_translate":
-                self.update_screen, self.__next__ = self._nouns_translate()
+                self._test = NounsTranslate(test_screen)
             case _:
                 raise ValueError("Unsupported mode")
 
     @staticmethod
-    def _nouns_translate():
-        def comparison(one: Noun, other: Noun):
-            return one.singular == other.singular and one.translation == other.translation
+    def get_layout(mode: str):
+        root_dir = os.getcwd()
+        match mode.lower():
+            case "nouns_translate":
+                return os.path.join(root_dir, TestBuilder.test_layouts, NounsTranslate.LAYOUT_FILE)
 
-        def update_screen(test_screen: MDScreen, new_word: Word):
-            test_screen.ids['translation'].text = new_word.translation
-        dictionary = dl.get_nouns()
-        dictionary.reset_index()
-        dictionary = dictionary.sample(frac=1).iterrows()
+    def check(self, guess):
+        return self._test.check(guess)
 
-        def next_item():
-            _, noun = next(dictionary)
-            noun = noun.tolist()
-            noun = Noun(*noun, comparison_function=comparison)
-            return noun
+    def hint(self):
+        self._test.hint()
 
-        return update_screen, next_item
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        return next(self._test)
+
+    def get_user_input(self):
+        return self._test.get_user_input()

@@ -1,27 +1,32 @@
-#:include GUI/layouts/header.kv
+#:include GUI/layouts/tests/header.kv
+#:include GUI/layouts/tests/footer.kv
 
 <TestScreen>:
-    MDBoxLayout:
-        orientation: 'vertical'
+    Header:
 
-        Header:
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: 0.15
+        pos_hint: {'center_y': 0.5}
+        spacing: dp(20)
+        padding: dp(20)
 
-        MDBoxLayout:
-            orientation: 'horizontal'
-            spacing: dp(20)
+        TextField:
+            id: genus
+            size_hint_x: 0.2
+            hint_text: 'Genus'
+            write_tab: False
 
-            MDTextField:
-                id: genus
-                hint_text: 'Genus'
+        TextField:
+            id: singular
+            write_tab: False
+            size_hint_x: 0.5
+            hint_text: 'Singular'
 
-            MDTextField:
-                id: singular
-                hint_text: 'Singular'
+        MDLabel:
+            id: translation
+            size_hint_x: 0.3
+            text: 'Translation'
 
-            MDLabel:
-                id: translation
-                text: 'Translation'
-
-        MDRectangleFlatButton:
-            text: 'SUBMIT'
-            on_release: root.on_submit(genus.text, singular.text)
+    Footer:
+        id: footer

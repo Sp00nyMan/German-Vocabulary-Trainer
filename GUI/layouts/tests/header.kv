@@ -1,0 +1,12 @@
+<Header@MDAnchorLayout>:
+    anchor_y: 'top'
+    size_hint_x: 1
+
+    MDIconButton:
+        icon_size: "40sp"
+        icon: "arrow-left"
+        on_release: app.root.back()
+
+    MDRectangleFlatButton:
+        text: "SKIP"
+        on_release: app.root.skip()

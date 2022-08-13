@@ -1,12 +1,15 @@
-class Word:
-    def __init__(self, translation: str, comparison_function=None):
-        self._translation = translation.strip().lower()
-        if comparison_function:
-            self.__eq__ = comparison_function
+from abc import ABC, abstractmethod
 
+
+class Word(ABC):
+    def __init__(self, translation: str):
+        self._translation = translation.strip().lower() if translation else None
+
+    @abstractmethod
     def __str__(self):
         pass
 
-    @property
+    @abstractmethod
     def translation(self):
         return self._translation
+

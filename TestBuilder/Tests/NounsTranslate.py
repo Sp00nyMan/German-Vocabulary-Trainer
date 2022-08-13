@@ -1,0 +1,62 @@
+from kivymd.uix.screen import MDScreen
+
+from Entities import Noun
+from .Test import Test
+from DataLoader import get_nouns
+
+
+class NounsTranslate(Test):
+    LAYOUT_FILE = r"nouns_translate.kv"
+    _last_word: Noun
+
+    def __init__(self, test_screen: MDScreen):
+        dictionary = get_nouns()
+        dictionary.reset_index()
+        dictionary = dictionary.sample(frac=1).iterrows()
+        super().__init__(test_screen, dictionary)
+
+    def _clear(self):
+        super()._clear()
+        self._test_screen.ids['genus'].text = ""
+        self._test_screen.ids['genus'].focus = True
+        self._test_screen.ids['singular'].text = ""
+        self._test_screen.ids['singular'].hint_text = "Singular"
+        self._test_screen.ids['translation'].text = self._last_word.translation
+
+    def check(self, guess):
+        return NounsTranslate._compare(self._last_word, guess)
+
+    def _get_word_for_hint(self) -> str:
+        return self._last_word.singular[4:]
+
+    def _set_hint(self, hint):
+        self._test_screen.ids['singular'].hint_text = hint
+
+    @staticmethod
+    def _compare(word1: Noun, word2):
+        assert isinstance(word1, Noun)
+        if isinstance(word2, tuple):
+            try:
+                word2 = Noun(word2[0], singular=word2[1], plural=None, translation=None)
+            except ValueError:
+                return False
+        if isinstance(word2, Noun):
+            return word1.singular == word2.singular
+        raise ValueError(f"word2 has unsupported type: {type(word2)}")
+
+    def __next__(self):
+        _, noun = next(self.dictionary)
+        if not noun.genus or not noun.singular:
+            noun = next(self)
+        else:
+            noun = noun.tolist()
+            noun = Noun(*noun)
+
+        self._last_word = noun
+        self._clear()
+
+        return noun
+
+    def get_user_input(self):
+        return self._test_screen.ids['genus'].text, \
+               self._test_screen.ids['singular'].text

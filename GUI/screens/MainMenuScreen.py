@@ -18,7 +18,9 @@ class MainMenuScreen(MDScreen):
 
     def _load_buttons(self):
         for category in DataLoader.sheet_names:
-            button = MDRectangleFlatButton(text=category.upper())
+            button = MDRectangleFlatButton(text=category.upper(),
+                                           pos_hint={'center_x': 0.5},
+                                           font_size=30)
             button.bind(on_release=self.on_button_clicked)
             self.ids['body'].add_widget(button)
 

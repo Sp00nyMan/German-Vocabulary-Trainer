@@ -5,7 +5,7 @@ from openpyxl.worksheet.worksheet import Worksheet
 import pandas as pd
 from typing import List
 
-DATA_PATH = r"G:\My Drive\Deutsch\Wortschatz.xlsx"
+DATA_PATH = r"E:\My Drive\Deutsch\Wortschatz.xlsx"
 _workbook: Workbook = load_workbook(DATA_PATH)
 sheet_names = _workbook.sheetnames
 __data_cache = dict()

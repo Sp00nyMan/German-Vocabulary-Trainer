@@ -1,0 +1,23 @@
+<Footer>:
+    padding: dp(15)
+
+    size_hint_x: 1
+    anchor_y: 'bottom'
+
+    MDBoxLayout:
+        orientation: 'horizontal'
+        spacing: dp(50)
+        MDRectangleFlatButton:
+            id: hint
+            disabled: True
+            opacity: 0
+            size_hint_x: 0.3
+
+            text: 'HINT'
+            on_release: root.screen.hint()
+
+        MDRectangleFlatButton:
+            id: submit
+            text: 'SUBMIT'
+            size_hint_x: 0.3
+            on_release: root.screen.on_submit(*root.screen.get_user_input())
