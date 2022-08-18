@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
+from typing import Tuple
 
 from kivymd.uix.screen import MDScreen
-from numpy import random
 
 from Entities import Word
 
@@ -13,18 +13,32 @@ class Test(ABC):
         self.dictionary = dictionary
 
         self._last_word: Word = None
+        self._hint = self._test_screen.ids['footer'].ids['hint']
 
     @staticmethod
     @abstractmethod
     def _compare(word1: Word, word2):
+
+        pass
+
+    @abstractmethod
+    def check(self, user_guess):
+        """
+        :param user_guess: user's input in the fields genus and singular
+        :return: the list of fields' ids that are incorrect
+        """
         pass
 
     def _clear(self):
         self._hint_opened = set()
         self._hint_chars_to_open = 1
 
-        self._test_screen.ids['footer'].ids['hint'].disabled = True
-        self._test_screen.ids['footer'].ids['hint'].opacity = 0
+        self._hint.disabled = True
+        self._hint.opacity = 0
+
+    def enable_hint_button(self):
+        self._hint.disabled = False
+        self._hint.opacity = 1
 
     @abstractmethod
     def __next__(self):
@@ -35,6 +49,10 @@ class Test(ABC):
 
     @abstractmethod
     def _get_word_for_hint(self) -> str:
+        pass
+
+    @abstractmethod
+    def get_user_input(self) -> Tuple:
         pass
 
     @abstractmethod

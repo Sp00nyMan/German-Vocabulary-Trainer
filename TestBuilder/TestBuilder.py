@@ -1,21 +1,20 @@
 import os
+from abc import ABC
 
-from kivy.lang import Builder
-from kivymd.uix.screen import MDScreen
-
-from Entities import Word
 from .Tests import NounsTranslate
+from .Tests.Test import Test
 
 
-class TestBuilder:
+class TestBuilder(ABC):
     test_layouts = r"GUI\layouts\tests"
 
-    def __init__(self, mode: str, test_screen: MDScreen):
-        match mode.lower():
+    @staticmethod
+    def get_test(test_mode: str, test_screen) -> Test:
+        match test_mode.lower():
             case "nouns_translate":
-                self._test = NounsTranslate(test_screen)
+                return NounsTranslate(test_screen)
             case _:
-                raise ValueError("Unsupported mode")
+                raise ValueError("Unsupported test mode")
 
     @staticmethod
     def get_layout(mode: str):
@@ -23,18 +22,3 @@ class TestBuilder:
         match mode.lower():
             case "nouns_translate":
                 return os.path.join(root_dir, TestBuilder.test_layouts, NounsTranslate.LAYOUT_FILE)
-
-    def check(self, guess):
-        return self._test.check(guess)
-
-    def hint(self):
-        self._test.hint()
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        return next(self._test)
-
-    def get_user_input(self):
-        return self._test.get_user_input()

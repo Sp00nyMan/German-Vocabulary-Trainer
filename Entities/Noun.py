@@ -15,7 +15,7 @@ class Noun(Word):
 
     def __init__(self, gender: Gender, singular: str, plural: str, translation: str):
         super().__init__(translation)
-        self._gender = Gender(gender) if singular else None
+        self._gender = Gender(gender) if gender else None
         self._singular = singular.strip().lower() if singular else None
         self._plural = plural.strip().lower() if plural else None
 
@@ -29,7 +29,7 @@ class Noun(Word):
 
     @property
     def singular(self):
-        return f"{self.gender} {self._singular.capitalize()}" if self._singular else None
+        return f"{self._singular.capitalize()}" if self._singular else None
 
     @property
     def plural(self):
