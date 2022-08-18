@@ -8,19 +8,16 @@ from DataLoader import get_nouns
 
 
 class NounsTranslate(Test):
-    LAYOUT_FILE = r"nouns_translate.kv"
+    LAYOUT_FILE = "nouns_translate.kv"
     _last_word: Noun
 
     def __init__(self, test_screen: MDScreen):
         dictionary = get_nouns()
-        dictionary.reset_index()
-        dictionary = dictionary.sample(frac=1).iterrows()
         super().__init__(test_screen, dictionary)
 
     def _clear(self):
         super()._clear()
         self._test_screen.ids['genus'].text = ""
-        self._test_screen.ids['genus'].focus = True
         self._test_screen.ids['genus'].error = False
 
         self._test_screen.ids['singular'].text = ""
@@ -28,6 +25,10 @@ class NounsTranslate(Test):
         self._test_screen.ids['singular'].error = False
 
         self._test_screen.ids['translation'].text = self._last_word.translation
+
+    def _focus(self):
+        self._test_screen.ids['genus'].focus = True
+
 
     def check(self, guess):
         compare_result = NounsTranslate._compare(self._last_word, guess)
@@ -39,9 +40,10 @@ class NounsTranslate(Test):
         return incorrect_fields
 
     def _get_word_for_hint(self) -> str:
-        return self._last_word.singular[4:]
+        return self._last_word.singular
 
     def _set_hint(self, hint):
+        self._test_screen.ids['genus'].focus = True
         self._test_screen.ids['singular'].hint_text = hint
 
     @staticmethod

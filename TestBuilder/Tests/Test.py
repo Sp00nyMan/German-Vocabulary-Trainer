@@ -7,6 +7,7 @@ from Entities import Word
 
 
 class Test(ABC):
+    LAYOUT_FILE: str
 
     def __init__(self, test_screen: MDScreen, dictionary):
         self._test_screen: MDScreen = test_screen
@@ -18,7 +19,6 @@ class Test(ABC):
     @staticmethod
     @abstractmethod
     def _compare(word1: Word, word2):
-
         pass
 
     @abstractmethod
@@ -29,12 +29,19 @@ class Test(ABC):
         """
         pass
 
+    @abstractmethod
     def _clear(self):
+        self._focus()
+
         self._hint_opened = set()
         self._hint_chars_to_open = 1
 
         self._hint.disabled = True
         self._hint.opacity = 0
+
+    @abstractmethod
+    def _focus(self):
+        pass
 
     def enable_hint_button(self):
         self._hint.disabled = False
@@ -56,7 +63,7 @@ class Test(ABC):
         pass
 
     @abstractmethod
-    def _set_hint(self, word: str):
+    def _set_hint(self, hint: str):
         pass
 
     def hint(self):

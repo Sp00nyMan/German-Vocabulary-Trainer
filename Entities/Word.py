@@ -9,7 +9,6 @@ class Word(ABC):
     def __str__(self):
         pass
 
-    @abstractmethod
+    @property
     def translation(self):
         return self._translation
-

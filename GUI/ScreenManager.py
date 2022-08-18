@@ -20,6 +20,8 @@ class ScreenManager(SM):
         match category.lower():
             case "substantive":
                 mode = "nouns_translate"
+            case "regelmässig verben":
+                mode = "regular_verbs_translate"
             case _:
                 return
 
@@ -28,7 +30,8 @@ class ScreenManager(SM):
 
     def _reload_test_screen(self, test_mode):
         if self.test_screen:
-            self.remove_widget(self.get_screen(self.test_screen.name))
+            self.test_screen.unload()
+            self.remove_widget(self.test_screen)
         self.test_screen = TestScreen(test_mode)
         self.add_widget(self.test_screen)
 

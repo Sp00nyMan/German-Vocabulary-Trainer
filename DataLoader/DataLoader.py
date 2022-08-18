@@ -40,6 +40,9 @@ def _sheet_to_table(sheet_name: str) -> pd.DataFrame:
     df = pd.DataFrame(rows_list, columns=list(map(str.lower, columns)), dtype=str)
     __data_cache[sheet_name] = df
 
+    df.reset_index()
+    df = df.sample(frac=1).iterrows()
+
     return df
 
 
@@ -83,6 +86,10 @@ def get_irregular_verbs() -> pd.DataFrame:
 
     df = pd.DataFrame(list(rows), columns=columns, dtype=str)
     __data_cache[sheet_name] = df
+
+    df.reset_index()
+    df = df.sample(frac=1).iterrows()
+
     return df
 
 

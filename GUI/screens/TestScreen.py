@@ -1,14 +1,14 @@
 from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.properties import ObjectProperty
-from kivymd.uix.anchorlayout import MDAnchorLayout
+from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.textfield import MDTextField
 
 from TestBuilder import TestBuilder
 
 
-class Footer(MDAnchorLayout):
+class Footer(MDBoxLayout):
     screen: ObjectProperty(None)
 
 
@@ -23,14 +23,16 @@ class TestScreen(MDScreen):
     NAME = "TEST_SCREEN"
 
     def __init__(self, test_mode):
-        layout = TestBuilder.get_layout(test_mode)
-        Builder.unload_file(layout)
-        Builder.load_file(layout)
+        self.__layout = TestBuilder.get_layout(test_mode)
+        Builder.load_file(self.__layout)
         super().__init__(name=self.NAME)
 
         self._test = TestBuilder.get_test(test_mode, self)
         self.ids['footer'].screen = self
         Clock.schedule_once(lambda dt: next(self._test))
+
+    def unload(self):
+        Builder.unload_file(self.__layout)
 
     def get_user_input(self):
         return self._test.get_user_input()
@@ -38,10 +40,13 @@ class TestScreen(MDScreen):
     def on_submit(self, *user_input):
         incorrect_ids = self._test.check(user_input)
         if len(incorrect_ids) == 0:
-            next(self._test)
+            self._next_word()
         else:
             self._test.enable_hint_button()
             self.highlight_red(incorrect_ids)
+
+    def _next_word(self):
+        next(self._test)
 
     def skip(self):
         self._next_word()
