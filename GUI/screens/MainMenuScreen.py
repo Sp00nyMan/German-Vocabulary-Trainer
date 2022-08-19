@@ -1,28 +1,48 @@
 from os import path
+from typing import Iterable
 
 from kivy.lang import Builder
 from kivymd.uix.button import MDRectangleFlatButton
 from kivymd.uix.screen import MDScreen
 
-import DataLoader
+import TestBuilder
 
 
 class MainMenuScreen(MDScreen):
     NAME = "MAIN_MENU"
+    LAYOUT_PATH = path.join(path.dirname(__file__), r"..\layouts\main_menu.kv")
 
-    def __init__(self):
-        p = path.join(path.dirname(__file__), r"..\layouts\main_menu.kv")
-        Builder.load_file(p)
+    def __init__(self, test_mode: str = None):
+        Builder.load_file(MainMenuScreen.LAYOUT_PATH)
         super().__init__(name=self.NAME)
-        self._load_buttons()
+        self._load_buttons(test_mode.lower() if test_mode else 'all')
 
-    def _load_buttons(self):
-        for category in DataLoader.sheet_names:
-            button = MDRectangleFlatButton(text=category.upper(),
+    def unload(self):
+        Builder.unload_file(self.LAYOUT_PATH)
+
+    def _load_buttons(self, test_mode):
+        if test_mode == 'all':
+            self._create_buttons(TestBuilder.TEST_MODES)
+        elif test_mode in TestBuilder.TEST_MODES:
+            self.ids['back'].disabled = False
+            self.ids['back'].opacity = 1
+
+            ids = TestBuilder.TEST_MODES[test_mode]
+            titles = map(lambda id: id.split('_')[-1], ids)
+            self._create_buttons(titles, ids)
+        else:
+            raise ValueError(f'Test Mode {test_mode} is not supported :(')
+
+    def _create_buttons(self, titles: Iterable[str], ids: Iterable[str] = None):
+        if not ids:
+            ids = titles
+        for title, id in zip(titles, ids):
+            button = MDRectangleFlatButton(text=title.upper(),
+                                           id=id,
                                            pos_hint={'center_x': 0.5},
                                            font_size=30)
             button.bind(on_release=self.on_button_clicked)
             self.ids['body'].add_widget(button)
 
-    def on_button_clicked(self, sender:MDRectangleFlatButton):
-        self.manager.load(sender.text)
+    def on_button_clicked(self, sender: MDRectangleFlatButton):
+        self.manager.load(sender.text, sender.id)

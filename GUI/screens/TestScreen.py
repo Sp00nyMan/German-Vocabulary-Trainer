@@ -46,7 +46,10 @@ class TestScreen(MDScreen):
             self.highlight_red(incorrect_ids)
 
     def _next_word(self):
-        next(self._test)
+        try:
+            next(self._test)
+        except StopIteration:
+            self.manager.back()
 
     def skip(self):
         self._next_word()

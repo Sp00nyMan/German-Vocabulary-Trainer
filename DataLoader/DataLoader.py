@@ -3,7 +3,7 @@ from openpyxl.cell import Cell
 from openpyxl.worksheet.worksheet import Worksheet
 
 import pandas as pd
-from typing import List
+from typing import List, Iterable
 
 DATA_PATH = r"G:\My Drive\Deutsch\Wortschatz.xlsx"
 _workbook: Workbook = load_workbook(DATA_PATH)
@@ -20,7 +20,7 @@ def _row_to_list(row) -> List[str]:
     return list(map(Cell.value.fget, row))
 
 
-def _sheet_to_table(sheet_name: str) -> pd.DataFrame:
+def _sheet_to_table(sheet_name: str) -> Iterable:
     if sheet_name in __data_cache:
         return __data_cache[sheet_name]
 
@@ -38,20 +38,19 @@ def _sheet_to_table(sheet_name: str) -> pd.DataFrame:
         rows_list.append(data)
 
     df = pd.DataFrame(rows_list, columns=list(map(str.lower, columns)), dtype=str)
-    __data_cache[sheet_name] = df
-
     df.reset_index()
     df = df.sample(frac=1).iterrows()
+    __data_cache[sheet_name] = df
 
     return df
 
 
-def get_nouns() -> pd.DataFrame:
+def get_nouns() -> Iterable:
     df = _sheet_to_table(_workbook.sheetnames[0])
     return df
 
 
-def get_regular_verbs() -> pd.DataFrame:
+def get_regular_verbs() -> Iterable:
     df = _sheet_to_table(_workbook.sheetnames[1])
     return df
 
@@ -73,7 +72,7 @@ def __parse_irregular_verb(rows):
         yield verb
 
 
-def get_irregular_verbs() -> pd.DataFrame:
+def get_irregular_verbs() -> Iterable:
     sheet_name = _workbook.sheetnames[2]
 
     if sheet_name in __data_cache:
@@ -85,19 +84,18 @@ def get_irregular_verbs() -> pd.DataFrame:
     print(f"Loaded sheet: {sheet.title} (columns: {columns})")
 
     df = pd.DataFrame(list(rows), columns=columns, dtype=str)
-    __data_cache[sheet_name] = df
-
     df.reset_index()
     df = df.sample(frac=1).iterrows()
+    __data_cache[sheet_name] = df
 
     return df
 
 
-def get_adjectives() -> pd.DataFrame:
+def get_adjectives() -> Iterable:
     df = _sheet_to_table(_workbook.sheetnames[3])
     return df
 
 
-def get_adverbs() -> pd.DataFrame:
+def get_adverbs() -> Iterable:
     df = _sheet_to_table(_workbook.sheetnames[4])
     return df
