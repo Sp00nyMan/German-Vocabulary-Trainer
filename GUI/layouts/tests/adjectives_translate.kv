@@ -1,0 +1,25 @@
+#:include GUI/layouts/tests/header.kv
+#:include GUI/layouts/tests/footer.kv
+
+<TestScreen>:
+    Header:
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: 0.15
+        pos_hint: {'center_y': 0.5}
+        spacing: dp(20)
+        padding: dp(20)
+
+        TextField:
+            id: adjektive
+            size_hint_x: 0.2
+            hint_text: 'Adjektive'
+            text_validate_unfocus: False
+
+        MDLabel:
+            id: translation
+            size_hint_x: 0.3
+
+    Footer:
+        id: footer

@@ -1,13 +1,21 @@
 #: include GUI/layouts/BackButton.kv
 
 <MainMenuScreen>:
-    BackButton:
-        id: back
-        disabled: True
-        opacity: 0
-
-    MDBoxLayout:
-        id: body
+    BoxLayout:
+        anchor_y: 'top'
         orientation: 'vertical'
-        spacing: '15dp'
-        pos_hint: {'center_y': 0.7}
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: 0.2
+            BackButton:
+                id: back
+                disabled: True
+                opacity: 0
+            MDLabel:
+                id: title
+                text: "MAIN MENU"
+        MDBoxLayout:
+            id: body
+            orientation: 'vertical'
+            spacing: '15dp'
+#            pos_hint: {'center_y': 0.7}

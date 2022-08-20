@@ -3,6 +3,7 @@ from typing import Tuple
 from kivymd.uix.screen import MDScreen
 
 from Entities import Noun
+from GUI.screens.TestScreen import TextField
 from .Test import Test
 from DataLoader import get_nouns
 
@@ -15,20 +16,22 @@ class NounsTranslate(Test):
         dictionary = get_nouns()
         super().__init__(test_screen, dictionary)
 
+        self._genus: TextField = self._test_screen.ids['genus']
+        self._singular: TextField = self._test_screen.ids['singular']
+
     def _clear(self):
         super()._clear()
-        self._test_screen.ids['genus'].text = ""
-        self._test_screen.ids['genus'].error = False
+        self._genus.text = ""
+        self._genus.error = False
 
-        self._test_screen.ids['singular'].text = ""
-        self._test_screen.ids['singular'].hint_text = "Singular"
-        self._test_screen.ids['singular'].error = False
+        self._singular.text = ""
+        self._singular.hint_text = "Singular"
+        self._singular.error = False
 
         self._test_screen.ids['translation'].text = self._last_word.translation
 
     def _focus(self):
-        self._test_screen.ids['genus'].focus = True
-
+        self._genus.focus = True
 
     def check(self, guess):
         compare_result = NounsTranslate._compare(self._last_word, guess)
@@ -43,15 +46,15 @@ class NounsTranslate(Test):
         return self._last_word.singular
 
     def _set_hint(self, hint):
-        self._test_screen.ids['genus'].focus = True
-        self._test_screen.ids['singular'].hint_text = hint
+        self._focus()
+        self._singular.hint_text = hint
 
     @staticmethod
     def _compare(word1: Noun, word2) -> Tuple[bool, bool]:
         assert isinstance(word1, Noun)
         if isinstance(word2, tuple):
             try:
-                word2 = Noun(word2[0], singular=word2[1], plural=None, translation=None)
+                word2 = Noun(word2[0], word2[1], *[None]*2)
             except ValueError:
                 return False, True
         if isinstance(word2, Noun):
@@ -72,5 +75,4 @@ class NounsTranslate(Test):
         return noun
 
     def get_user_input(self):
-        return self._test_screen.ids['genus'].text, \
-               self._test_screen.ids['singular'].text
+        return self._genus.text, self._singular.text

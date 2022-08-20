@@ -5,7 +5,7 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.textfield import MDTextField
 
-from TestBuilder import TestBuilder
+import TestBuilder
 
 
 class Footer(MDBoxLayout):

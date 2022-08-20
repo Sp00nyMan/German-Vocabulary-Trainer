@@ -26,6 +26,7 @@ class MainMenuScreen(MDScreen):
         elif test_mode in TestBuilder.TEST_MODES:
             self.ids['back'].disabled = False
             self.ids['back'].opacity = 1
+            self.ids['title'].text = test_mode.upper()
 
             ids = TestBuilder.TEST_MODES[test_mode]
             titles = map(lambda id: id.split('_')[-1], ids)

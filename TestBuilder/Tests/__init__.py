@@ -1,2 +1,3 @@
 from .NounsTranslate import NounsTranslate
 from .RegularVerbsTranslate import RegularVerbsTranslate
+from .AdjectivesTranslate import AdjectivesTranslate
