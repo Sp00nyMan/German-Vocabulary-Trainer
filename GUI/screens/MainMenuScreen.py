@@ -22,7 +22,8 @@ class MainMenuScreen(MDScreen):
 
     def _load_buttons(self, test_mode):
         if test_mode == 'all':
-            self._create_buttons(TestBuilder.TEST_MODES)
+            modes = list(TestBuilder.TEST_MODES.keys()) + ['party']
+            self._create_buttons(modes)
         elif test_mode in TestBuilder.TEST_MODES:
             self.ids['back'].disabled = False
             self.ids['back'].opacity = 1

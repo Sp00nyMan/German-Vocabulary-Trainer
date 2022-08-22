@@ -11,13 +11,19 @@
         spacing: dp(20)
         padding: dp(20)
 
+        MDLabel:
+            id: genus_singular
+            size_hint_x: 0.4
+
         TextField:
-            id: inf
-            size_hint_x: 0.5
+            id: plural
+            size_hint_x: 0.3
+            hint_text: 'Plural'
             text_validate_unfocus: False
+
         MDLabel:
             id: translation
-            size_hint_x: 0.4
+            size_hint_x: 0.3
 
     Footer:
         id: footer

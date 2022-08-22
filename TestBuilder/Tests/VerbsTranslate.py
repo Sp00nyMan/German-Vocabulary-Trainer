@@ -7,12 +7,12 @@ from Entities import Verb
 from TestBuilder.Tests.Test import Test
 
 
-class RegularVerbsTranslate(Test):
-    LAYOUT_FILE = "regular_verbs_translate.kv"
+class VerbsTranslate(Test):
+    LAYOUT_FILE = "verbs_translate.kv"
     _last_word: Verb
 
     def __init__(self, test_screen: MDScreen):
-        dictionary = DataLoader.get_regular_verbs()
+        dictionary = DataLoader.get_verbs()
         super().__init__(test_screen, dictionary)
 
         self._infinitive = self._test_screen.ids['inf']
@@ -21,7 +21,7 @@ class RegularVerbsTranslate(Test):
         super()._clear()
         self._infinitive.text = ""
         self._infinitive.error = False
-        self._infinitive.hint_text = "Infinitive"
+        self._infinitive.hint_text = "Infinitiv"
 
         self._test_screen.ids['translation'].text = self._last_word.translation
 
@@ -29,7 +29,7 @@ class RegularVerbsTranslate(Test):
         self._infinitive.focus = True
 
     def check(self, user_guess):
-        if not RegularVerbsTranslate._compare(self._last_word, user_guess):
+        if not VerbsTranslate._compare(self._last_word, user_guess):
             return ['inf']
         return []
 

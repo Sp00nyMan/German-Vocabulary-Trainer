@@ -1,15 +1,17 @@
 from abc import ABC, abstractmethod
 from typing import Tuple
 
+from kivy.uix.boxlayout import BoxLayout
 from kivymd.uix.screen import MDScreen
 
 from Entities import Word
 
 
-class Test(ABC):
+class Test(ABC, BoxLayout):
     LAYOUT_FILE: str
 
     def __init__(self, test_screen: MDScreen, dictionary):
+        super().__init__()
         self._test_screen: MDScreen = test_screen
         self.dictionary = dictionary
 
@@ -68,18 +70,18 @@ class Test(ABC):
 
     def hint(self):
         word_for_hint = self._get_word_for_hint()
-        left_to_open = set(word_for_hint)
+        left_to_open = []
+        for c in word_for_hint.lower():  # Not using set because I want to preserve the order of the letters
+            if c not in self._hint_opened and c not in left_to_open:
+                left_to_open.append(c)
         chars_count = len(left_to_open)
 
-        for c in self._hint_opened:
-            left_to_open.remove(c)
-
         for _ in range(min(int(self._hint_chars_to_open), len(left_to_open))):
-            self._hint_opened.add(left_to_open.pop())
+            self._hint_opened.add(left_to_open.pop(0))
 
         hint = ""
         for c in word_for_hint:
-            hint += (c if c in self._hint_opened else '_') + ' '
+            hint += (c if c in self._hint_opened or c.lower() in self._hint_opened else '_') + ' '
 
         if self._hint_chars_to_open < chars_count:
             self._hint_chars_to_open += 0.5

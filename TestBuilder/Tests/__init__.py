@@ -1,3 +1,6 @@
 from .NounsTranslate import NounsTranslate
-from .RegularVerbsTranslate import RegularVerbsTranslate
+from .NounsPlural import NounsPlural
+from .NounsGenus import NounsGenus
+from .VerbsTranslate import VerbsTranslate
 from .AdjectivesTranslate import AdjectivesTranslate
+from .AdverbsTranslate import AdverbsTranslate

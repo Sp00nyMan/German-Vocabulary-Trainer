@@ -1,7 +1,7 @@
 #:include GUI/layouts/tests/header.kv
 #:include GUI/layouts/tests/footer.kv
 
-<NounsTranslate>:
+<VerbsTranslate>:
     orientation: 'horizontal'
     size_hint_y: 0.15
     pos_hint: {'center_y': 0.5}
@@ -9,15 +9,9 @@
     padding: dp(20)
 
     TextField:
-        id: genus
-        size_hint_x: 0.2
-        hint_text: 'Genus'
-        text_validate_unfocus: False
-
-    TextField:
-        id: singular
+        id: inf
         size_hint_x: 0.5
-
+        text_validate_unfocus: False
     MDLabel:
         id: translation
-        size_hint_x: 0.3
+        size_hint_x: 0.4

@@ -22,14 +22,22 @@ class TextField(MDTextField):
 class TestScreen(MDScreen):
     NAME = "TEST_SCREEN"
 
-    def __init__(self, test_mode):
+    def __init__(self, test_mode, id=None):
         self.__layout = TestBuilder.get_layout(test_mode)
         Builder.load_file(self.__layout)
-        super().__init__(name=self.NAME)
+        name = self.NAME + (str(id) if id is not None else '')
+        super().__init__(name=name)
+
+        self.register_event_type('on_next')
+        self.register_event_type('on_done')
 
         self._test = TestBuilder.get_test(test_mode, self)
+        self.ids['test'] = self._test
         self.ids['footer'].screen = self
-        Clock.schedule_once(lambda dt: next(self._test))
+        Clock.schedule_once(lambda dt: self._next_word())
+
+    def load_test(self):
+
 
     def unload(self):
         Builder.unload_file(self.__layout)
@@ -48,8 +56,9 @@ class TestScreen(MDScreen):
     def _next_word(self):
         try:
             next(self._test)
+            self.dispatch('on_next')
         except StopIteration:
-            self.manager.back()
+            self.dispatch('on_done')
 
     def skip(self):
         self._next_word()
@@ -61,3 +70,8 @@ class TestScreen(MDScreen):
         for id in ids:
             assert isinstance(self.ids[id], MDTextField), "Only TextFields can be highlighted!"
             self.ids[id].error = True
+
+    def on_next(self):
+        pass
+    def on_done(self):
+        pass

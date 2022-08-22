@@ -1,32 +1,39 @@
 import os
 
-from .Tests import NounsTranslate, RegularVerbsTranslate, AdjectivesTranslate
+from .Tests import NounsTranslate, VerbsTranslate, AdjectivesTranslate, AdverbsTranslate, NounsPlural, NounsGenus
 from .Tests.Test import Test
 
 
 TEST_LAYOUTS_PATH = r"GUI\layouts\tests"
 TEST_MODES = {'substantive':
                   ['nouns_übersetzen',
-                   'nouns_plural',  # TODO
-                   'nouns_genus'],  # TODO
-              'regelmässig verben':
-                  ['regular_verbs_übersetzen',
-                   'regular_verbs_konjugate'],  # TODO
-              'unregelmässig verben':
-                  ['irregular_verbs_übersetzen',  # TODO
-                   'irregular_verbs_konjugate',  # TODO
-                   'irregular_verbs_präteritum',  # TODO
-                   'irregular_verbs_perfekt'],  # TODO
+                   'nouns_plural',
+                   'nouns_genus'],
+              'verben':
+                  ['verbs_übersetzen',
+                   # 'verbs_konjugate',  # TODO
+                   # 'verbs_präteritum',  # TODO
+                   # 'verbs_perfekt',  # TODO
+                   # 'verbs_partizip II',  # TODO
+                   ],
               'adjektive':
                   ['adjectives_übersetzen',
-                   'adjectives_compare'],  # TODO
+                   # 'adjectives_compare',  # TODO
+                   ],
               'adverben':
-                  ['adverbs_übersetzen']  # TODO
+                  ['adverbs_übersetzen'],
               }
 
 
+def get_all_tests():
+    tests = []
+    for modes in TEST_MODES.values():
+        tests += modes
+    return tests
+
+
 def check_test_mode(test_mode):
-    if not any([test_mode in modes for modes in TEST_MODES.values()]):
+    if test_mode not in get_all_tests():
         raise ValueError(f"Unsupported Test Mode {test_mode}")
 
 
@@ -34,10 +41,16 @@ def _get_test_class(test_mode: str) -> Test.__class__:
     match test_mode.lower():
         case "nouns_übersetzen":
             return NounsTranslate
-        case "regular_verbs_übersetzen":
-            return RegularVerbsTranslate
+        case "nouns_plural":
+            return NounsPlural
+        case "nouns_genus":
+            return NounsGenus
+        case "verbs_übersetzen":
+            return VerbsTranslate
         case "adjectives_übersetzen":
             return AdjectivesTranslate
+        case "adverbs_übersetzen":
+            return AdverbsTranslate
         case _:
             raise NotImplementedError(f"Unsupported Test Mode {test_mode}")
 
