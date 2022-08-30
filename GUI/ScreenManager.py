@@ -1,58 +1,70 @@
 import random
 
-from kivy.uix.screenmanager import ScreenManager as SM
-from kivymd.uix.screen import MDScreen
+from kivy.lang import Builder
+from kivy.uix.screenmanager import ScreenManager as KivySM
 
 import TestBuilder
 from GUI.screens.MainMenuScreen import MainMenuScreen
 from GUI.screens.TestScreen import TestScreen
 
 
-class ScreenManager(SM):
+class ScreenManager(KivySM):
     main_menu_screen: MainMenuScreen = None
     test_screen: TestScreen = None
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-        self._load_main_menu(None)
+        Builder.load_file(r'GUI/layouts/test_screen.kv')
+        self._reload_main_menu(None)
         self.current = MainMenuScreen.NAME
 
+    def _party_load(self):
+        self._party_tests = []
+        self.test_screen.bind(on_next=self._party_on_next,
+                              on_end=self._party_test_end)
+        for test in TestBuilder.get_all_tests():
+            self._party_tests.append(TestBuilder.get_test(test, self.test_screen))
+        self._party_on_next()
+
     def _party_on_next(self, *args):
-        print("party_next", args)
-        if not hasattr(self, '_test_screens'):
+        if not hasattr(self, '_party_tests'):
             raise RuntimeError('Tests were not initialised')
-        next_test_id = random.randint(0, len(self._test_screens))
-        self.current = TestScreen.NAME + str(next_test_id)
+        next_test = random.sample(self._party_tests, 1)[0]
+        self.test_screen.load(next_test)
+        return True
 
-    def _party_test_end(self, *args):
-        print(args, self._test_screens)
-        # TODO remove test from list
+    def _party_test_end(self, sender):
+        test = sender._test
+        print(f"Congratulations! You finished the test: {test}")
+        self._party_tests.remove(test)
+        if len(self._party_tests) != 0:
+            self._party_on_next()
+            return True
+        else:
+            return False
 
-    def load(self, category: str, id: str):
-        print(category, id)
+    def load(self, category: str, test_id: str):
+        print(category, test_id)
         if category.lower() == 'party':
-            self._test_screens = []
-            for i, test_mode in enumerate(TestBuilder.get_all_tests()):
-                test_screen = TestScreen(test_mode, i)
-                test_screen.bind(on_next=self._party_on_next)
-                test_screen.bind(on_end=self._party_test_end)
-                self._test_screens.append(test_screen)
-        elif category.lower() in TestBuilder.TEST_MODES:
-            self._load_main_menu(id)
+            self._reload_test_screen()
+            self._party_load()
+            self.current = TestScreen.NAME
+        elif category.lower() in TestBuilder.TEST_CATEGORIES:
+            self._reload_main_menu(test_id)
             self.current = MainMenuScreen.NAME
         else:
-            self._load_test_screen(id)
+            self._reload_test_screen()
+            self.test_screen.load(TestBuilder.get_test(test_id, self.test_screen))
             self.current = TestScreen.NAME
 
-    def _load_test_screen(self, test_mode):
+    def _reload_test_screen(self):
         if self.test_screen:
-            self.test_screen.unload()
+            self.test_screen.kill()
             self.remove_widget(self.test_screen)
-        self.test_screen = TestScreen(test_mode)
+        self.test_screen = TestScreen()
         self.add_widget(self.test_screen)
 
-    def _load_main_menu(self, category):
+    def _reload_main_menu(self, category):
         if self.main_menu_screen:
             self.main_menu_screen.unload()
             self.remove_widget(self.main_menu_screen)
@@ -61,7 +73,7 @@ class ScreenManager(SM):
 
     def back(self):
         if self.current == MainMenuScreen.NAME:
-            self._load_main_menu(None)
+            self._reload_main_menu(None)
         self.current = MainMenuScreen.NAME
 
     def skip(self):

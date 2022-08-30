@@ -8,14 +8,14 @@ from TestBuilder.Tests.Test import Test
 
 
 class NounsGenus(Test):
-    LAYOUT_FILE = "nouns_genus.kv"
+    _LAYOUT_FILE = "nouns_genus.kv"
     _last_word: Noun
 
     def __init__(self, test_screen: MDScreen):
         dictionary = get_nouns()
         super().__init__(test_screen, dictionary)
 
-        self._genus = self._test_screen.ids['genus']
+        self._genus = self.ids['genus']
 
     @staticmethod
     def _compare(word1: Word, word2):
@@ -37,8 +37,8 @@ class NounsGenus(Test):
         self._genus.hint_text = "Genus"
         self._genus.error = False
 
-        self._test_screen.ids['singular'].text = self._last_word.singular
-        self._test_screen.ids['translation'].text = self._last_word.translation
+        self.ids['singular'].text = self._last_word.singular
+        self.ids['translation'].text = self._last_word.translation
 
     def _focus(self):
         self._genus.focus = True

@@ -9,14 +9,14 @@ from DataLoader import get_adjectives
 
 
 class AdjectivesTranslate(Test):
-    LAYOUT_FILE = "adjectives_translate.kv"
+    _LAYOUT_FILE = "adjectives_translate.kv"
     _last_word: Adjective
 
-    def __init__(self, test_screen: MDScreen):
+    def __init__(self, footer):
         dictionary = get_adjectives()
-        super().__init__(test_screen, dictionary)
+        super().__init__(footer, dictionary)
 
-        self._adjektive: TextField = self._test_screen.ids['adjektive']
+        self._adjektive: TextField = self.ids['adjektive']
 
     def _clear(self):
         super()._clear()
@@ -24,7 +24,7 @@ class AdjectivesTranslate(Test):
         self._adjektive.hint_text = "Adjektive"
         self._adjektive.error = False
 
-        self._test_screen.ids['translation'].text = self._last_word.translation
+        self.ids['translation'].text = self._last_word.translation
 
     def _focus(self):
         self._adjektive.focus = True

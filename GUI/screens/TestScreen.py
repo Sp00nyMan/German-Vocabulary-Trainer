@@ -1,11 +1,10 @@
 from kivy.clock import Clock
-from kivy.lang import Builder
 from kivy.properties import ObjectProperty
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.textfield import MDTextField
 
-import TestBuilder
+from TestBuilder.Tests import Test
 
 
 class Footer(MDBoxLayout):
@@ -16,31 +15,35 @@ class TextField(MDTextField):
     write_tab = False
 
     def on_text_validate(self):
-        self.parent.parent.ids['footer'].ids['submit'].dispatch('on_release')
+        self.parent.submit()
 
 
 class TestScreen(MDScreen):
     NAME = "TEST_SCREEN"
 
-    def __init__(self, test_mode, id=None):
-        self.__layout = TestBuilder.get_layout(test_mode)
-        Builder.load_file(self.__layout)
-        name = self.NAME + (str(id) if id is not None else '')
-        super().__init__(name=name)
+    def __init__(self):
+        super().__init__(name=self.NAME)
 
         self.register_event_type('on_next')
         self.register_event_type('on_done')
 
-        self._test = TestBuilder.get_test(test_mode, self)
-        self.ids['test'] = self._test
         self.ids['footer'].screen = self
-        Clock.schedule_once(lambda dt: self._next_word())
 
-    def load_test(self):
+        self._test: Test = None
 
+    def load(self, test: Test):
+        if self._test is not None:
+            self.remove_widget(self._test)
+            self._test = None
+        self._test = test
+        self.add_widget(self._test)
+        Clock.schedule_once(lambda dt: self.on_next())
 
-    def unload(self):
-        Builder.unload_file(self.__layout)
+    def kill(self):
+        """
+        Unloads Test's layout file
+        """
+        self._test.unload()
 
     def get_user_input(self):
         return self._test.get_user_input()
@@ -48,17 +51,10 @@ class TestScreen(MDScreen):
     def on_submit(self, *user_input):
         incorrect_ids = self._test.check(user_input)
         if len(incorrect_ids) == 0:
-            self._next_word()
+            self.dispatch('on_next')
         else:
             self._test.enable_hint_button()
-            self.highlight_red(incorrect_ids)
-
-    def _next_word(self):
-        try:
-            next(self._test)
-            self.dispatch('on_next')
-        except StopIteration:
-            self.dispatch('on_done')
+            self._test.highlight_red(incorrect_ids)
 
     def skip(self):
         self._next_word()
@@ -66,12 +62,11 @@ class TestScreen(MDScreen):
     def hint(self):
         self._test.hint()
 
-    def highlight_red(self, ids):
-        for id in ids:
-            assert isinstance(self.ids[id], MDTextField), "Only TextFields can be highlighted!"
-            self.ids[id].error = True
-
     def on_next(self):
-        pass
+        try:
+            next(self._test)
+        except StopIteration:
+            self.dispatch('on_done')
+
     def on_done(self):
-        pass
+        self.parent.back()

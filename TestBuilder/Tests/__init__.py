@@ -4,3 +4,5 @@ from .NounsGenus import NounsGenus
 from .VerbsTranslate import VerbsTranslate
 from .AdjectivesTranslate import AdjectivesTranslate
 from .AdverbsTranslate import AdverbsTranslate
+
+from .Test import Test

@@ -8,14 +8,14 @@ from DataLoader import get_adverbs
 
 
 class AdverbsTranslate(Test):
-    LAYOUT_FILE = "adverbs_translate.kv"
+    _LAYOUT_FILE = "adverbs_translate.kv"
     _last_word: Adverb
 
-    def __init__(self, test_screen: MDScreen):
+    def __init__(self, footer):
         dictionary = get_adverbs()
-        super().__init__(test_screen, dictionary)
+        super().__init__(footer, dictionary)
 
-        self._adverb: TextField = self._test_screen.ids['adverb']
+        self._adverb: TextField = self.ids['adverb']
 
     def _clear(self):
         super()._clear()
@@ -23,7 +23,7 @@ class AdverbsTranslate(Test):
         self._adverb.hint_text = "Adverb"
         self._adverb.error = False
 
-        self._test_screen.ids['translation'].text = self._last_word.translation
+        self.ids['translation'].text = self._last_word.translation
 
     def _focus(self):
         self._adverb.focus = True

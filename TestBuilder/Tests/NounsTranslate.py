@@ -9,15 +9,14 @@ from DataLoader import get_nouns
 
 
 class NounsTranslate(Test):
-    LAYOUT_FILE = "nouns_translate.kv"
+    _LAYOUT_FILE = "nouns_translate.kv"
     _last_word: Noun
 
-    def __init__(self, test_screen: MDScreen):
+    def __init__(self, footer, **kwargs):
         dictionary = get_nouns()
-        super().__init__(test_screen, dictionary)
-
-        self._genus: TextField = self._test_screen.ids['genus']
-        self._singular: TextField = self._test_screen.ids['singular']
+        super().__init__(footer, dictionary, **kwargs)
+        self._genus: TextField = self.ids['genus']
+        self._singular: TextField = self.ids['singular']
 
     def _clear(self):
         super()._clear()
@@ -28,7 +27,7 @@ class NounsTranslate(Test):
         self._singular.hint_text = "Singular"
         self._singular.error = False
 
-        self._test_screen.ids['translation'].text = self._last_word.translation
+        self.ids['translation'].text = self._last_word.translation
 
     def _focus(self):
         self._genus.focus = True
@@ -46,7 +45,6 @@ class NounsTranslate(Test):
         return self._last_word.singular
 
     def _set_hint(self, hint):
-        self._focus()
         self._singular.hint_text = hint
 
     @staticmethod

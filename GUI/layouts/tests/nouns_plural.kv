@@ -1,29 +1,19 @@
-#:include GUI/layouts/tests/header.kv
-#:include GUI/layouts/tests/footer.kv
+<NounsPlural>:
+    orientation: 'horizontal'
+    size_hint_y: 0.15
+    pos_hint: {'center_y': 0.5}
+    spacing: dp(20)
+    padding: dp(20)
 
-<TestScreen>:
-    Header:
+    MDLabel:
+        id: genus_singular
+        size_hint_x: 0.4
 
-    BoxLayout:
-        orientation: 'horizontal'
-        size_hint_y: 0.15
-        pos_hint: {'center_y': 0.5}
-        spacing: dp(20)
-        padding: dp(20)
+    TextField:
+        id: plural
+        size_hint_x: 0.3
+        text_validate_unfocus: False
 
-        MDLabel:
-            id: genus_singular
-            size_hint_x: 0.4
-
-        TextField:
-            id: plural
-            size_hint_x: 0.3
-            hint_text: 'Plural'
-            text_validate_unfocus: False
-
-        MDLabel:
-            id: translation
-            size_hint_x: 0.3
-
-    Footer:
-        id: footer
+    MDLabel:
+        id: translation
+        size_hint_x: 0.3

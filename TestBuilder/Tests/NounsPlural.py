@@ -8,14 +8,14 @@ from TestBuilder.Tests.Test import Test
 
 
 class NounsPlural(Test):
-    LAYOUT_FILE = "nouns_plural.kv"
+    _LAYOUT_FILE = "nouns_plural.kv"
     _last_word: Noun
 
     def __init__(self, test_screen: MDScreen):
         dictionary = get_nouns()
         super().__init__(test_screen, dictionary)
 
-        self._plural = self._test_screen.ids['plural']
+        self._plural = self.ids['plural']
 
     @staticmethod
     def _compare(word1: Word, word2):
@@ -37,8 +37,8 @@ class NounsPlural(Test):
         self._plural.hint_text = "Plural"
         self._plural.error = False
 
-        self._test_screen.ids['genus_singular'].text = f"{self._last_word.gender} {self._last_word.singular}"
-        self._test_screen.ids['translation'].text = self._last_word.translation
+        self.ids['genus_singular'].text = f"{self._last_word.gender} {self._last_word.singular}"
+        self.ids['translation'].text = self._last_word.translation
 
     def _focus(self):
         self._plural.focus = True

@@ -1,22 +1,35 @@
-from abc import ABC, abstractmethod
+import os
+from abc import abstractmethod
 from typing import Tuple
 
+from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
-from kivymd.uix.screen import MDScreen
+from kivymd.uix.textfield import MDTextField
 
 from Entities import Word
 
+LAYOUTS_PATH = r"GUI\layouts\tests"
 
-class Test(ABC, BoxLayout):
-    LAYOUT_FILE: str
 
-    def __init__(self, test_screen: MDScreen, dictionary):
-        super().__init__()
-        self._test_screen: MDScreen = test_screen
+class Test(BoxLayout):
+    _LAYOUT_FILE: str
+
+    def __init__(self, footer, dictionary, **kwargs):
+        Builder.load_file(self.LAYOUT_FILE)
+        super(Test, self).__init__(**kwargs)
         self.dictionary = dictionary
 
         self._last_word: Word = None
-        self._hint = self._test_screen.ids['footer'].ids['hint']
+        self._hint_button = footer.ids['hint']
+        self._submit_button = footer.ids['submit']
+
+    def unload(self):
+        Builder.unload_file(self.LAYOUT_FILE)
+
+    @property
+    def LAYOUT_FILE(self):
+        root_dir = os.getcwd()
+        return os.path.join(root_dir, LAYOUTS_PATH, self._LAYOUT_FILE)
 
     @staticmethod
     @abstractmethod
@@ -38,16 +51,19 @@ class Test(ABC, BoxLayout):
         self._hint_opened = set()
         self._hint_chars_to_open = 1
 
-        self._hint.disabled = True
-        self._hint.opacity = 0
+        self._hint_button.disabled = True
+        self._hint_button.opacity = 0
 
     @abstractmethod
     def _focus(self):
         pass
 
     def enable_hint_button(self):
-        self._hint.disabled = False
-        self._hint.opacity = 1
+        self._hint_button.disabled = False
+        self._hint_button.opacity = 1
+
+    def submit(self):
+        self._submit_button.dispatch('on_release')
 
     @abstractmethod
     def __next__(self):
@@ -87,3 +103,9 @@ class Test(ABC, BoxLayout):
             self._hint_chars_to_open += 0.5
 
         self._set_hint(hint.rstrip())
+        self._focus()
+
+    def highlight_red(self, ids):
+        for id in ids:
+            assert isinstance(self.ids[id], MDTextField), "Only TextFields can be highlighted!"
+            self.ids[id].error = True

@@ -8,14 +8,14 @@ from TestBuilder.Tests.Test import Test
 
 
 class VerbsTranslate(Test):
-    LAYOUT_FILE = "verbs_translate.kv"
+    _LAYOUT_FILE = "verbs_translate.kv"
     _last_word: Verb
 
-    def __init__(self, test_screen: MDScreen):
+    def __init__(self, footer):
         dictionary = DataLoader.get_verbs()
-        super().__init__(test_screen, dictionary)
+        super().__init__(footer, dictionary)
 
-        self._infinitive = self._test_screen.ids['inf']
+        self._infinitive = self.ids['inf']
 
     def _clear(self):
         super()._clear()
@@ -23,7 +23,7 @@ class VerbsTranslate(Test):
         self._infinitive.error = False
         self._infinitive.hint_text = "Infinitiv"
 
-        self._test_screen.ids['translation'].text = self._last_word.translation
+        self.ids['translation'].text = self._last_word.translation
 
     def _focus(self):
         self._infinitive.focus = True
