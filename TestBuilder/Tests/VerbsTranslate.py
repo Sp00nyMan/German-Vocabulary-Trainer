@@ -38,14 +38,8 @@ class VerbsTranslate(Test):
             return word1.infinitive == word2.infinitive
         raise ValueError(f"word2 has unsupported type: {type(word2)}")
 
-    def __next__(self):
-        _, verb = next(self.dictionary)
-        verb = Verb(*verb.tolist())
-
-        self._last_word = verb
-        self._clear()
-
-        return verb
+    def _from_series(self, word_series):
+        return Verb(*word_series.tolist())
 
     def _get_word_for_hint(self) -> str:
         return self._last_word.infinitive

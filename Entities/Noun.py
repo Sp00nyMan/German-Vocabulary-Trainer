@@ -36,4 +36,4 @@ class Noun(Word):
         return self._plural.capitalize() if self._plural else None
 
     def __str__(self):
-        return f"{self.singular}, {self.plural} - {self.translation}"
+        return f"{self.gender} {self.singular}, {self.plural} - {self.translation}"

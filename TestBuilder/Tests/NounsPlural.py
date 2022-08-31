@@ -39,16 +39,11 @@ class NounsPlural(Test):
     def _focus(self):
         self._plural.focus = True
 
-    def __next__(self):
-        _, noun = next(self.dictionary)
-        if not noun.plural:
-            noun.plural = noun.singular
-        noun = noun.tolist()
+    def _from_series(self, word_series):
+        if not word_series.plural:
+            word_series.plural = word_series.singular
+        noun = word_series.tolist()
         noun = Noun(*noun)
-
-        self._last_word = noun
-        self._clear()
-
         return noun
 
     def _get_word_for_hint(self) -> str:

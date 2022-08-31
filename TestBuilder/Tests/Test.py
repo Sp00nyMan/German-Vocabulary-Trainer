@@ -6,6 +6,7 @@ from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.uix.textfield import MDTextField
 
+import WordRecorder
 from Entities import Word
 
 LAYOUTS_PATH = r"GUI\layouts\tests"
@@ -13,6 +14,7 @@ LAYOUTS_PATH = r"GUI\layouts\tests"
 
 class Test(BoxLayout):
     _LAYOUT_FILE: str
+    EXPERIMENTAL_PRIORITIZE = True  # From two random words select ones that were shown less times
 
     def __init__(self, footer, dictionary, **kwargs):
         Builder.load_file(self.LAYOUT_FILE)
@@ -44,7 +46,6 @@ class Test(BoxLayout):
         """
         pass
 
-    @abstractmethod
     def _clear(self):
         self._focus()
 
@@ -66,8 +67,18 @@ class Test(BoxLayout):
         self._submit_button.dispatch('on_release')
 
     @abstractmethod
-    def __next__(self):
+    def _from_series(self, word_series):
         pass
+
+    def __next__(self):
+        _, word = next(self.dictionary)
+        self._last_word = self._from_series(word)
+        if Test.EXPERIMENTAL_PRIORITIZE:
+            _, word_1 = next(self.dictionary)
+            word_1 = self._from_series(word_1)
+            self._last_word = WordRecorder.compare(self._last_word, word_1)
+        self._clear()
+        return self._last_word
 
     def __iter__(self):
         return self

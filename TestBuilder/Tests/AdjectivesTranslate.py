@@ -45,15 +45,8 @@ class AdjectivesTranslate(Test):
         self._focus()
         self._adjektive.hint_text = hint
 
-    def __next__(self):
-        _, adjective = next(self.dictionary)
-        adjective = adjective.tolist()
-        adjective = Adjective(*adjective)
-
-        self._last_word = adjective
-        self._clear()
-
-        return adjective
+    def _from_series(self, word_series):
+        return Adjective(*word_series.to_list())
 
     def get_user_input(self):
         return self._adjektive.text,

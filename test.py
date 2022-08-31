@@ -1,7 +1,7 @@
 import json
 from time import sleep
 
-from DataLoader import WordRecord
+from WordRecorder import WordRecord
 
 
 def main():

@@ -4,7 +4,7 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.textfield import MDTextField
 
-import DataLoader
+from WordRecorder import update_record
 
 
 class Footer(MDBoxLayout):
@@ -57,7 +57,7 @@ class TestScreen(MDScreen):
             self._test.highlight_red(incorrect_ids)
 
     def skip(self):
-        DataLoader.update_record(self._test, -1)
+        update_record(self._test._last_word, -1)
         self.dispatch('on_next')
 
     def hint(self):
@@ -66,7 +66,7 @@ class TestScreen(MDScreen):
     def on_next(self):
         try:
             next(self._test)
-            DataLoader.update_record(self._test)
+            update_record(self._test._last_word)
         except StopIteration:
             self.dispatch('on_done')
 

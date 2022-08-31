@@ -45,15 +45,8 @@ class AdverbsTranslate(Test):
         self._focus()
         self._adverb.hint_text = hint
 
-    def __next__(self):
-        _, adverb = next(self.dictionary)
-        adverb = adverb.tolist()
-        adverb = Adverb(*adverb)
-
-        self._last_word = adverb
-        self._clear()
-
-        return adverb
+    def _from_series(self, word_series):
+        return Adverb(*word_series.to_list())
 
     def get_user_input(self):
         return self._adverb.text,

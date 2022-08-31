@@ -1,34 +1,30 @@
-import json
 import pandas as pd
 from typing import List, Iterable
 from openpyxl import load_workbook, Workbook
 
 DATA_PATH = r"G:\My Drive\Deutsch\Wortschatz.xlsx"
-STATS_FILE = "DataLoader/stats.json"
 
 """ LOADING SECTION """
 _workbook: Workbook = None
 sheet_names: tuple = None
 __data_cache: dict = None
-_stats: dict = None
 
 # TODO Order words by stats
 
 
 def _reload_data():
-    global _workbook, __data_cache, sheet_names, _stats
+    global _workbook, __data_cache, sheet_names
 
     print("Reloading the data")
     _workbook = load_workbook(DATA_PATH)
     sheet_names = _workbook.sheetnames
     __data_cache = dict()
 
-    with open(STATS_FILE, encoding='utf-8') as f:
-        _stats = json.load(f)
 
-
-if _workbook is None or __data_cache is None or sheet_names is None or _stats is None:
+if _workbook is None or __data_cache is None or sheet_names is None:
+    from WordRecorder import load_stats
     _reload_data()
+    load_stats()
 
 """ LOADING SECTION """
 
@@ -133,21 +129,3 @@ def get_adjectives() -> Iterable:
 def get_adverbs() -> Iterable:
     df = _sheet_to_table(_workbook.sheetnames[4])
     return _df_to_iter(df)
-
-
-def update_record(test, add=1):
-    from TestBuilder import get_test_mode
-    from .WordRecord import WordRecord
-
-    test_mode = get_test_mode(test)
-    word_repr = str(test._last_word)
-    record = _stats["shown_by_mode"][test_mode].get(word_repr, None)
-    wr = WordRecord({test_mode: {word_repr: record}})
-    wr += add
-    _stats["shown_by_mode"][test_mode][word_repr] = wr.to_dict()[1]
-
-
-def save_stats():
-    with open(STATS_FILE, "w", encoding='utf-8') as f:
-        json.dump(_stats, f, indent=4)
-    print("STATS SAVED SUCCESSFULLY!!!")

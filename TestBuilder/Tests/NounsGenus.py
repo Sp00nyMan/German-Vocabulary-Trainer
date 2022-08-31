@@ -39,16 +39,12 @@ class NounsGenus(Test):
     def _focus(self):
         self._genus.focus = True
 
-    def __next__(self):
-        _, noun = next(self.dictionary)
-        if not noun.genus or not noun.singular:
+    def _from_series(self, word_series):
+        if not word_series.genus or not word_series.singular:
             noun = next(self)
         else:
-            noun = noun.tolist()
+            noun = word_series.tolist()
             noun = Noun(*noun)
-
-        self._last_word = noun
-        self._clear()
 
         return noun
 

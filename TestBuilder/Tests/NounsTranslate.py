@@ -17,7 +17,7 @@ class NounsTranslate(Test):
         self._singular = self.ids['singular']
 
     def _clear(self):
-        super()._clear()
+        super(NounsTranslate, self)._clear()
         self._genus.text = ""
         self._genus.error = False
 
@@ -56,18 +56,13 @@ class NounsTranslate(Test):
         if isinstance(word2, Noun):
             return word1.gender == word2.gender, word1.singular == word2.singular
         raise ValueError(f"word2 has unsupported type: {type(word2)}")
-
-    def __next__(self):
-        _, noun = next(self.dictionary)
-        if not noun.genus or not noun.singular:
+    
+    def _from_series(self, word_series):
+        if not word_series.genus or not word_series.singular:
             noun = next(self)
         else:
-            noun = noun.tolist()
+            noun = word_series.tolist()
             noun = Noun(*noun)
-
-        self._last_word = noun
-        self._clear()
-
         return noun
 
     def get_user_input(self):
