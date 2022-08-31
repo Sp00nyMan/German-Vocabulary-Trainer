@@ -1,19 +1,15 @@
-from typing import Tuple
-
-from kivymd.uix.screen import MDScreen
-
 from DataLoader import get_nouns
 from Entities import Word, Noun
-from TestBuilder.Tests.Test import Test
+from .Test import Test
 
 
 class NounsGenus(Test):
     _LAYOUT_FILE = "nouns_genus.kv"
     _last_word: Noun
 
-    def __init__(self, test_screen: MDScreen):
+    def __init__(self, footer):
         dictionary = get_nouns()
-        super().__init__(test_screen, dictionary)
+        super().__init__(footer, dictionary)
 
         self._genus = self.ids['genus']
 
@@ -59,7 +55,7 @@ class NounsGenus(Test):
     def _get_word_for_hint(self) -> str:
         return self._last_word.gender.value
 
-    def get_user_input(self) -> Tuple:
+    def get_user_input(self):
         return self._genus.text,
 
     def _set_hint(self, hint: str):

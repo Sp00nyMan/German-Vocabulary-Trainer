@@ -5,7 +5,7 @@ from kivy.lang import Builder
 from kivymd.uix.button import MDRectangleFlatButton
 from kivymd.uix.screen import MDScreen
 
-import TestBuilder
+from TestBuilder import TEST_CATEGORIES
 
 
 class MainMenuScreen(MDScreen):
@@ -22,14 +22,14 @@ class MainMenuScreen(MDScreen):
 
     def _load_buttons(self, test_mode):
         if test_mode == 'all':
-            modes = list(TestBuilder.TEST_CATEGORIES.keys()) + ['party']
+            modes = list(TEST_CATEGORIES.keys()) + ['party']
             self._create_buttons(modes)
-        elif test_mode in TestBuilder.TEST_CATEGORIES:
+        elif test_mode in TEST_CATEGORIES:
             self.ids['back'].disabled = False
             self.ids['back'].opacity = 1
             self.ids['title'].text = test_mode.upper()
 
-            ids = TestBuilder.TEST_CATEGORIES[test_mode]
+            ids = TEST_CATEGORIES[test_mode]
             titles = map(lambda id: id.split('_')[-1], ids)
             self._create_buttons(titles, ids)
         else:

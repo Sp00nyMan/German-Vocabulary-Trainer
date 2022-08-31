@@ -1,8 +1,4 @@
-from typing import Tuple
-
-from kivymd.uix.screen import MDScreen
-
-import DataLoader
+from DataLoader import get_verbs
 from Entities import Verb
 from TestBuilder.Tests.Test import Test
 
@@ -12,7 +8,7 @@ class VerbsTranslate(Test):
     _last_word: Verb
 
     def __init__(self, footer):
-        dictionary = DataLoader.get_verbs()
+        dictionary = get_verbs()
         super().__init__(footer, dictionary)
 
         self._infinitive = self.ids['inf']
@@ -54,7 +50,7 @@ class VerbsTranslate(Test):
     def _get_word_for_hint(self) -> str:
         return self._last_word.infinitive
 
-    def get_user_input(self) -> Tuple:
+    def get_user_input(self):
         return self._infinitive.text,
 
     def _set_hint(self, hint: str):

@@ -1,9 +1,6 @@
 from typing import Tuple
 
-from kivymd.uix.screen import MDScreen
-
 from Entities import Noun
-from GUI.screens.TestScreen import TextField
 from .Test import Test
 from DataLoader import get_nouns
 
@@ -12,11 +9,12 @@ class NounsTranslate(Test):
     _LAYOUT_FILE = "nouns_translate.kv"
     _last_word: Noun
 
-    def __init__(self, footer, **kwargs):
+    def __init__(self, footer):
         dictionary = get_nouns()
-        super().__init__(footer, dictionary, **kwargs)
-        self._genus: TextField = self.ids['genus']
-        self._singular: TextField = self.ids['singular']
+        super().__init__(footer, dictionary)
+
+        self._genus = self.ids['genus']
+        self._singular = self.ids['singular']
 
     def _clear(self):
         super()._clear()

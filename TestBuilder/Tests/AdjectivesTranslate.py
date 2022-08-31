@@ -1,10 +1,5 @@
-from typing import Tuple
-
-from kivymd.uix.screen import MDScreen
-
-from Entities import Adjective
-from GUI.screens.TestScreen import TextField
 from .Test import Test
+from Entities import Adjective
 from DataLoader import get_adjectives
 
 
@@ -16,7 +11,7 @@ class AdjectivesTranslate(Test):
         dictionary = get_adjectives()
         super().__init__(footer, dictionary)
 
-        self._adjektive: TextField = self.ids['adjektive']
+        self._adjektive = self.ids['adjektive']
 
     def _clear(self):
         super()._clear()

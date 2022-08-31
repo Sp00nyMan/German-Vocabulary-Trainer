@@ -1,8 +1,4 @@
-
-from kivymd.uix.screen import MDScreen
-
 from Entities import Adverb
-from GUI.screens.TestScreen import TextField
 from .Test import Test
 from DataLoader import get_adverbs
 
@@ -15,7 +11,7 @@ class AdverbsTranslate(Test):
         dictionary = get_adverbs()
         super().__init__(footer, dictionary)
 
-        self._adverb: TextField = self.ids['adverb']
+        self._adverb = self.ids['adverb']
 
     def _clear(self):
         super()._clear()

@@ -1,6 +1,5 @@
-import os
-
-from .Tests import NounsTranslate, VerbsTranslate, AdjectivesTranslate, AdverbsTranslate, NounsPlural, NounsGenus, Test
+from .Tests import NounsTranslate, VerbsTranslate, AdjectivesTranslate, AdverbsTranslate, \
+    NounsPlural, NounsGenus, Test
 
 TEST_LAYOUTS_PATH = r"GUI\layouts\tests"
 TEST_CATEGORIES = {'substantive':
@@ -51,6 +50,24 @@ def _get_test_class(test_mode: str) -> Test.__class__:
             return AdverbsTranslate
         case _:
             raise NotImplementedError(f"Unsupported Test Mode {test_mode}")
+
+
+def get_test_mode(test_class: Test) -> str:
+    match test_class:
+        case NounsTranslate():
+            return "nouns_übersetzen"
+        case NounsPlural():
+            return "nouns_plural"
+        case NounsGenus():
+            return "nouns_genus"
+        case VerbsTranslate():
+            return "verbs_übersetzen"
+        case AdjectivesTranslate():
+            return "adjectives_übersetzen"
+        case AdverbsTranslate():
+            return "adverbs_übersetzen"
+        case _:
+            raise NotImplementedError(f"Unsupported Test: {test_class}")
 
 
 def get_test(test_mode: str, test_screen) -> Test:

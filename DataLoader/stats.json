@@ -1,0 +1,192 @@
+{
+    "shown_by_mode": {
+        "nouns_\u00fcbersetzen": {
+            "Armee, Armeen - \u0430\u0440\u043c\u0438\u044f": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 14:59:15"
+            },
+            "Hemd, Hemden - \u0440\u0443\u0431\u0430\u0448\u043a\u0430": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 14:59:19"
+            },
+            "Bronze, Bronzen - \u0431\u0440\u043e\u043d\u0437\u0430": {
+                "count_shown": 2,
+                "last_shown": "30.08.2022 15:17:21"
+            },
+            "Bedeutung, Bedeutungen - \u0441\u043c\u044b\u0441\u043b": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 14:59:27"
+            },
+            "Tag, Tage - \u0434\u0435\u043d\u044c": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 14:59:33"
+            },
+            "Werk, Werke - \u0440\u0430\u0431\u043e\u0442\u0430, labour": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 14:59:35"
+            },
+            "Tisch, Tische - \u0441\u0442\u043e\u043b": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 14:59:51"
+            },
+            "November, None - \u043d\u043e\u044f\u0431\u0440\u044c": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 14:59:54"
+            },
+            "Schmutz, None - \u0433\u0440\u044f\u0437\u044c": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:17:37"
+            },
+            "Boot, Boote - \u043b\u043e\u0434\u043a\u0430": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:18:44"
+            },
+            "Volk, V\u00f6lker - \u043d\u0430\u0440\u043e\u0434": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:25:44"
+            },
+            "Zeitung, Zeitungen - \u0433\u0430\u0437\u0435\u0442\u0430": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:25:46"
+            }
+        },
+        "nouns_genus": {
+            "Tisch, Tische - \u0441\u0442\u043e\u043b": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:17:42"
+            },
+            "Feder, Federn - \u043f\u0435\u0440\u043e": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:18:27"
+            },
+            "Gesicht, Gesichter - \u043b\u0438\u0446\u043e": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:18:30"
+            },
+            "Rad, R\u00e4der - \u043a\u043e\u043b\u0435\u0441\u043e": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:18:32"
+            },
+            "Hemd, Hemden - \u0440\u0443\u0431\u0430\u0448\u043a\u0430": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:19:15"
+            },
+            "Hand, H\u00e4nde - \u0440\u0443\u043a\u0430": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:25:42"
+            },
+            "Zeitung, Zeitungen - \u0433\u0430\u0437\u0435\u0442\u0430": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:25:45"
+            },
+            "Bedeutung, Bedeutungen - \u0441\u043c\u044b\u0441\u043b": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:25:52"
+            }
+        },
+        "nouns_plural": {
+            "Buch, B\u00fccher - \u043a\u043d\u0438\u0433\u0430": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:18:34"
+            },
+            "Gesicht, Gesichter - \u043b\u0438\u0446\u043e": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:18:53"
+            },
+            "M\u00e4dchen, M\u00e4dchen - \u0434\u0435\u0432\u043e\u0447\u043a\u0430": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:19:06"
+            },
+            "Montage, Montagen - \u043c\u043e\u043d\u0442\u0430\u0436": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:25:40"
+            },
+            "Tag, Tage - \u0434\u0435\u043d\u044c": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:25:45"
+            },
+            "Stellung, Stellungen - \u043f\u043e\u0437\u0438\u0446\u0438\u044f, \u043f\u043e\u043b\u043e\u0436\u0435\u043d\u0438\u0435": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:25:49"
+            },
+            "Stuhl, St\u00fchle - \u0441\u0442\u0443\u043b": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:25:50"
+            },
+            "Hand, H\u00e4nde - \u0440\u0443\u043a\u0430": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:25:52"
+            }
+        },
+        "verbs_\u00fcbersetzen": {
+            "machen - \u0434\u0435\u043b\u0430\u0442\u044c": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:18:18"
+            },
+            "heiraten - \u0432\u0441\u0442\u0443\u043f\u0430\u0442\u044c \u0432 \u0431\u0440\u0430\u043a": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:18:20"
+            },
+            "suchen - \u0438\u0441\u043a\u0430\u0442\u044c": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:19:02"
+            },
+            "leben - \u0436\u0438\u0442\u044c": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:19:04"
+            },
+            "h\u00f6ren - \u0441\u043b\u0443\u0448\u0430\u0442\u044c, \u0441\u043b\u044b\u0448\u0430\u0442\u044c": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:25:44"
+            },
+            "reichen - \u043f\u0440\u043e\u0442\u044f\u0433\u0438\u0432\u0430\u0442\u044c (\u0440\u0443\u043a\u0443)": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:25:46"
+            },
+            "aufmachen - \u043e\u0442\u043a\u0440\u044b\u0432\u0430\u0442\u044c": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:25:47"
+            },
+            "mitfahren - \u0435\u0445\u0430\u0442\u044c \u0441": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:25:47"
+            },
+            "tragen - \u043d\u043e\u0441\u0438\u0442\u044c": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:25:51"
+            }
+        },
+        "adjectives_\u00fcbersetzen": {
+            "sch\u00f6n - \u043a\u0440\u0430\u0441\u0438\u0432\u044b\u0439": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:18:48"
+            },
+            "loyal - \u043b\u043e\u044f\u043b\u044c\u043d\u044b\u0439": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:19:10"
+            },
+            "kalt - \u0445\u043e\u043b\u043e\u0434\u043d\u044b\u0439": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:23:54"
+            },
+            "bejahrt - \u0432 \u0432\u043e\u0437\u0432\u0440\u0430\u0441\u0442\u0435, \u043f\u043e\u0436\u0438\u043b\u043e\u0439": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:25:43"
+            },
+            "alt - \u0441\u0442\u0430\u0440\u044b\u0439": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:25:51"
+            }
+        },
+        "adverbs_\u00fcbersetzen": {
+            "dann - \u0437\u0430\u0442\u0435\u043c": {
+                "count_shown": 1,
+                "last_shown": "30.08.2022 15:25:41"
+            },
+            "unbedingt - \u0430\u0431\u0441\u043e\u043b\u044e\u0442\u043d\u043e, \u043d\u0435\u043f\u0440\u0435\u043c\u0435\u043d\u043d\u043e": {
+                "count_shown": 0,
+                "last_shown": "30.08.2022 15:25:48"
+            }
+        }
+    }
+}
