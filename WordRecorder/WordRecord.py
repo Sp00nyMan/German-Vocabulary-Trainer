@@ -44,21 +44,20 @@ class WordRecord:
         :return: key(word_repr), value
         """
         return self.word_repr, {"count": self.count_shown,
-                                "last": self.last_shown}
+                                "last": self.last_shown.strftime(WordRecord.TIME_FORMAT)}
 
     @staticmethod
     def _from_dict(d):
         assert isinstance(d, dict)
         word_repr = list(d.keys())[0]
-        print(d.values())
         d = d[word_repr]
         if d is not None:
             count_shown = d["count"]
             last_shown = d["last"]
         else:
             count_shown = 0
-            last_shown = datetime.now().strftime(WordRecord.TIME_FORMAT)
+            last_shown = datetime.now()
         return word_repr, count_shown, last_shown
 
     def __repr__(self):
-        return f"{self.word_repr}:{self.count_shown} - {self.last_shown.strftime(WordRecord.TIME_FORMAT)}"
+        return f"{self.word_repr}: {self.count_shown} - {self.last_shown.strftime(WordRecord.TIME_FORMAT)}"

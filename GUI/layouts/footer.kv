@@ -12,6 +12,7 @@
 
     MDRectangleFlatButton:
         id: submit
-        text: 'SUBMIT'
         size_hint_x: 0.3
+
+        text: 'SUBMIT'
         on_release: root.screen.on_submit(*root.screen.get_user_input())

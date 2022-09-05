@@ -27,6 +27,7 @@ class Test(BoxLayout):
 
     def unload(self):
         Builder.unload_file(self.LAYOUT_FILE)
+        print(f"Unloaded file: {self.LAYOUT_FILE}")
 
     @property
     def LAYOUT_FILE(self):

@@ -1,11 +1,17 @@
 #: include GUI/layouts/BackButton.kv
 
-<Header@MDAnchorLayout>:
-    anchor_y: 'top'
-    size_hint_x: 1
+<Header@MDBoxLayout>:
+    orientation: 'horizontal'
+    size_hint_y: 0.1
+    pos_hint: {"top": .95}
+
+    padding: dp(15)
+    spacing: dp(75)
 
     BackButton:
 
     MDRectangleFlatButton:
+        size_hint_x: 0.3
+        pos_hint: {"center_y": 0.5}
         text: "SKIP"
         on_release: app.root.skip()

@@ -51,13 +51,13 @@ class TestScreen(MDScreen):
     def on_submit(self, *user_input):
         incorrect_ids = self._test.check(user_input)
         if len(incorrect_ids) == 0:
+            update_record(self._test._last_word)
             self.dispatch('on_next')
         else:
             self._test.enable_hint_button()
             self._test.highlight_red(incorrect_ids)
 
     def skip(self):
-        update_record(self._test._last_word, -1)
         self.dispatch('on_next')
 
     def hint(self):
@@ -66,7 +66,6 @@ class TestScreen(MDScreen):
     def on_next(self):
         try:
             next(self._test)
-            update_record(self._test._last_word)
         except StopIteration:
             self.dispatch('on_done')
 

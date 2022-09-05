@@ -23,9 +23,12 @@ class NounsGenus(Test):
         raise ValueError(f"word2 has unsupported type: {type(word2)}")
 
     def check(self, user_guess):
-        if not NounsGenus._compare(self._last_word, user_guess):
-            return ['genus']
-        return []
+        try:
+            if NounsGenus._compare(self._last_word, user_guess):
+                return []
+        except ValueError:
+            pass
+        return ['genus']
 
     def _clear(self):
         super()._clear()

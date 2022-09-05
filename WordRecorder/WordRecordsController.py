@@ -2,7 +2,7 @@ import json
 
 from .WordRecord import WordRecord
 
-STATS_FILE = "DataLoader/stats.json"
+STATS_FILE = "WordRecorder/stats.json"
 _stats: dict = None
 
 
@@ -28,7 +28,6 @@ def update_record(word, add=1):
     wr = get_record(word)
     wr += add
     _stats["shown"][str(word)] = wr.to_dict()[1]
-    print(f"Updated Record {wr}")
 
 
 def compare(word1, word2):
