@@ -24,9 +24,10 @@ def get_record(word):
     return WordRecord({word_repr: record_dict})
 
 
-def update_record(word, add=1):
+def update_record(word, points):
     wr = get_record(word)
-    wr += add
+    wr += points
+    print(f"Updated record: {wr} by {points} points")
     _stats["shown"][str(word)] = wr.to_dict()[1]
 
 
@@ -36,7 +37,7 @@ def compare(word1, word2):
     """
     record1 = get_record(word1)
     record2 = get_record(word2)
-    if record1.count_shown < record2.count_shown or \
-            record1.count_shown == record2.count_shown and record1.last_shown < record2.last_shown:
+    if record1.points < record2.points or \
+            record1.points == record2.points and record1.last_shown < record2.last_shown:
         return word1
     return word2

@@ -25,6 +25,15 @@ class Test(BoxLayout):
         self._hint_button = footer.ids['hint']
         self._submit_button = footer.ids['submit']
 
+        self._earned_points = 1
+
+    @property
+    def earned_points(self):
+        return self._earned_points
+
+    def subtract_points(self, points):
+        self._earned_points -= points
+
     def unload(self):
         Builder.unload_file(self.LAYOUT_FILE)
         print(f"Unloaded file: {self.LAYOUT_FILE}")
@@ -43,7 +52,7 @@ class Test(BoxLayout):
     def check(self, user_guess):
         """
         :param user_guess: user's input in the fields genus and singular
-        :return: the list of fields' ids that are incorrect
+        :return: the list of fields' ids that are incorrect, the earned points
         """
         pass
 
@@ -55,6 +64,8 @@ class Test(BoxLayout):
 
         self._hint_button.disabled = True
         self._hint_button.opacity = 0
+
+        self._earned_points = 1
 
     @abstractmethod
     def _focus(self):
@@ -113,6 +124,10 @@ class Test(BoxLayout):
 
         if self._hint_chars_to_open < chars_count:
             self._hint_chars_to_open += 0.5
+
+        self.subtract_points(1)
+        if "_" not in hint:
+            self._earned_points -= 1
 
         self._set_hint(hint.rstrip())
         self._focus()

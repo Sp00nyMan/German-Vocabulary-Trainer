@@ -6,14 +6,14 @@ class WordRecord:
 
     word_repr: str
 
-    count_shown: int
+    points: int
     _last_shown: datetime
 
     def __init__(self, *args):
         if len(args) == 1:
             args = self._from_dict(args[0])
         if len(args) == 3:
-            self.word_repr, self.count_shown, self.last_shown = args
+            self.word_repr, self.points, self.last_shown = args
         else:
             raise ValueError("Invalid arguments")
 
@@ -29,21 +29,21 @@ class WordRecord:
             self._last_shown = datetime.strptime(value, WordRecord.TIME_FORMAT)
 
     def on_shown(self):
-        self.count_shown += 1
+        self.points += 1
         self.last_shown = datetime.now()
 
     def __iadd__(self, other):
-        if self.count_shown is None:
-            self.count_shown = 0
+        if self.points is None:
+            self.points = 0
         self.on_shown()
-        self.count_shown += other - 1
+        self.points += other - 1
         return self
 
     def to_dict(self):
         """
         :return: key(word_repr), value
         """
-        return self.word_repr, {"count": self.count_shown,
+        return self.word_repr, {"points": self.points,
                                 "last": self.last_shown.strftime(WordRecord.TIME_FORMAT)}
 
     @staticmethod
@@ -52,12 +52,12 @@ class WordRecord:
         word_repr = list(d.keys())[0]
         d = d[word_repr]
         if d is not None:
-            count_shown = d["count"]
+            points = d["points"]
             last_shown = d["last"]
         else:
-            count_shown = 0
+            points = 0
             last_shown = datetime.now()
-        return word_repr, count_shown, last_shown
+        return word_repr, points, last_shown
 
     def __repr__(self):
-        return f"{self.word_repr}: {self.count_shown} - {self.last_shown.strftime(WordRecord.TIME_FORMAT)}"
+        return f"{self.word_repr}: {self.points} - {self.last_shown.strftime(WordRecord.TIME_FORMAT)}"

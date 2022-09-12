@@ -51,9 +51,10 @@ class TestScreen(MDScreen):
     def on_submit(self, *user_input):
         incorrect_ids = self._test.check(user_input)
         if len(incorrect_ids) == 0:
-            update_record(self._test._last_word)
+            update_record(self._test._last_word, self._test.earned_points)
             self.dispatch('on_next')
         else:
+            self._test.subtract_points(0.5)
             self._test.enable_hint_button()
             self._test.highlight_red(incorrect_ids)
 
