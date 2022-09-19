@@ -33,7 +33,7 @@ class AdverbsTranslate(Test):
     def _compare(word1: Adverb, word2):
         assert isinstance(word1, Adverb)
         if isinstance(word2, tuple):
-            word2 = Adverb(word2[0], None)
+            word2 = Adverb(word2[0], None, None)
         if isinstance(word2, Adverb):
             return word1.adverb == word2.adverb
         raise ValueError(f"word2 has unsupported type: {type(word2)}")

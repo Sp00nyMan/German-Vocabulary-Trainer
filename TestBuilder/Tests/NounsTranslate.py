@@ -50,7 +50,7 @@ class NounsTranslate(Test):
         assert isinstance(word1, Noun)
         if isinstance(word2, tuple):
             try:
-                word2 = Noun(word2[0], word2[1], *[None]*2)
+                word2 = Noun(word2[0], word2[1], *[None]*3)
             except ValueError:
                 return False, True
         if isinstance(word2, Noun):

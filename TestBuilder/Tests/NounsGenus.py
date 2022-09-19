@@ -17,7 +17,7 @@ class NounsGenus(Test):
     def _compare(word1: Word, word2):
         assert isinstance(word1, Noun)
         if isinstance(word2, tuple):
-            word2 = Noun(word2[0], *[None]*3)
+            word2 = Noun(word2[0], *[None]*4)
         if isinstance(word2, Noun):
             return word1.gender == word2.gender
         raise ValueError(f"word2 has unsupported type: {type(word2)}")

@@ -73,6 +73,7 @@ def __parse_irregular_verb(rows):
         verb.append(row[0])
         verb.append(row[1])
         verb.append(row[3])
+        verb.append(row[4])
         row = _row_to_list(next(rows))
         verb.insert(2, row[1])
         row = _row_to_list(next(rows))

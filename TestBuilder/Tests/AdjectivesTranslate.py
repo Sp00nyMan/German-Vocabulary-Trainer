@@ -33,7 +33,7 @@ class AdjectivesTranslate(Test):
     def _compare(word1: Adjective, word2):
         assert isinstance(word1, Adjective)
         if isinstance(word2, tuple):
-            word2 = Adjective(word2[0], *[None]*3)
+            word2 = Adjective(word2[0], *[None]*4)
         if isinstance(word2, Adjective):
             return word1.adjective == word2.adjective
         raise ValueError(f"word2 has unsupported type: {type(word2)}")

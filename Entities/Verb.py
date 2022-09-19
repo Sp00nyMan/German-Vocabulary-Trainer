@@ -12,8 +12,8 @@ untrennbare_prefixe = ("ge", "be", "zer", "ver", "ent", "er", "re",
 
 
 class Verb(Word):
-    def __init__(self, infinitive: str, translation: str):
-        super().__init__(translation)
+    def __init__(self, infinitive: str, translation: str, synonyms: str):
+        super().__init__(translation, synonyms)
         self._infinitive = infinitive.strip().lower()
 
     def __str__(self):

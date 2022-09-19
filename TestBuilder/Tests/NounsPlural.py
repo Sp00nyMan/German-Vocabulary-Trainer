@@ -17,7 +17,7 @@ class NounsPlural(Test):
     def _compare(word1: Word, word2):
         assert isinstance(word1, Noun)
         if isinstance(word2, tuple):
-            word2 = Noun(*[None]*2, word2[0], None)
+            word2 = Noun(*[None]*2, word2[0], None, None)
         if isinstance(word2, Noun):
             return word1.plural == word2.plural
         raise ValueError(f"word2 has unsupported type: {type(word2)}")
