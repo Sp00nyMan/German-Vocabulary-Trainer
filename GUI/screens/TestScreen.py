@@ -15,7 +15,14 @@ class TextField(MDTextField):
     write_tab = False
 
     def on_text_validate(self):
-        self.parent.submit()
+        if hasattr(self.parent, "submit"):
+            self.parent.submit()
+        elif hasattr(self.parent.parent, "submit"):
+            self.parent.parent.submit()
+        elif hasattr(self.parent.parent.parent, "submit"):
+            self.parent.parent.parent.submit()
+        else:
+            print("Pisdets")
 
 
 class TestScreen(MDScreen):

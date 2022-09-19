@@ -1,0 +1,32 @@
+<VerbsKonjugate>:
+    orientation: 'vertical'
+    size_hint_y: 0.5
+    pos_hint: {'center_y': 0.5}
+    spacing: dp(40)
+    padding: dp(20)
+
+    MDLabel:
+        id: inf
+
+    MDBoxLayout:
+        orientation: 'horizontal'
+        spacing: dp(15)
+
+        TextField:
+            id: pres3
+            size_hint_x: 0.45
+        TextField:
+            id: pret
+            size_hint_x: 0.45
+
+    MDBoxLayout:
+        orientation: 'horizontal'
+        spacing: dp(15)
+
+        TextField:
+            id: hs
+            size_hint_x: 0.2
+        TextField:
+            id: part2
+            size_hint_x: 0.7
+            text_validate_unfocus: False

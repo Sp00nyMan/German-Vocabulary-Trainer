@@ -56,6 +56,7 @@ class Test(BoxLayout):
         """
         pass
 
+    @abstractmethod
     def _clear(self):
         self._focus()
 

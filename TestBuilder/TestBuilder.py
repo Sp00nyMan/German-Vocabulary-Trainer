@@ -1,5 +1,5 @@
 from .Tests import NounsTranslate, VerbsTranslate, AdjectivesTranslate, AdverbsTranslate, \
-    NounsPlural, NounsGenus, Test
+    NounsPlural, NounsGenus, VerbsKonjugate, Test
 
 TEST_LAYOUTS_PATH = r"GUI\layouts\tests"
 TEST_CATEGORIES = {'substantive':
@@ -8,10 +8,7 @@ TEST_CATEGORIES = {'substantive':
                         'nouns_genus'],
                    'verben':
                        ['verbs_übersetzen',
-                        # 'verbs_konjugate',  # TODO
-                        # 'verbs_präteritum',  # TODO
-                        # 'verbs_perfekt',  # TODO
-                        # 'verbs_partizip II',  # TODO
+                        'verbs_konjugate'
                         ],
                    'adjektive':
                        ['adjectives_übersetzen',
@@ -44,6 +41,8 @@ def _get_test_class(test_mode: str) -> Test.__class__:
             return NounsGenus
         case "verbs_übersetzen":
             return VerbsTranslate
+        case "verbs_konjugate":
+            return VerbsKonjugate
         case "adjectives_übersetzen":
             return AdjectivesTranslate
         case "adverbs_übersetzen":
@@ -62,6 +61,8 @@ def get_test_mode(test_class: Test) -> str:
             return "nouns_genus"
         case VerbsTranslate():
             return "verbs_übersetzen"
+        case VerbsKonjugate():
+            return "verbs_konjugate"
         case AdjectivesTranslate():
             return "adjectives_übersetzen"
         case AdverbsTranslate():
