@@ -5,7 +5,7 @@ from kivy.lang import Builder
 from kivymd.uix.button import MDRectangleFlatButton
 from kivymd.uix.screen import MDScreen
 
-from TestBuilder import TEST_CATEGORIES
+import TestBuilder
 
 
 class MainMenuScreen(MDScreen):
@@ -22,15 +22,18 @@ class MainMenuScreen(MDScreen):
 
     def _load_buttons(self, test_mode):
         if test_mode == 'all':
-            modes = list(TEST_CATEGORIES.keys()) + ['party']
+            modes = list(TestBuilder.get_test_groups() +
+                         list(map(lambda x: x.id, TestBuilder.get_independent_modes())) +
+                         ["party"])
             self._create_buttons(modes)
-        elif test_mode in TEST_CATEGORIES:
+        elif test_mode in TestBuilder.get_test_groups():
             self.ids['back'].disabled = False
             self.ids['back'].opacity = 1
             self.ids['title'].text = test_mode.upper()
 
-            ids = TEST_CATEGORIES[test_mode]
-            titles = map(lambda id: id.split('_')[-1], ids)
+            available_modes = TestBuilder.get_by_category(test_mode)
+            ids = list(map(lambda x: x.id, available_modes))
+            titles = list(map(lambda x: x.name, available_modes))
             self._create_buttons(titles, ids)
         else:
             raise ValueError(f'Test Mode {test_mode} is not supported :(')
@@ -47,4 +50,4 @@ class MainMenuScreen(MDScreen):
             self.ids['body'].add_widget(button)
 
     def on_button_clicked(self, sender: MDRectangleFlatButton):
-        self.manager.load(sender.text, sender.id)
+        self.manager.load(sender.id)

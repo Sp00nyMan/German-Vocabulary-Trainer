@@ -5,5 +5,5 @@ from .VerbsTranslate import VerbsTranslate
 from .VerbsKonjugate import VerbsKonjugate
 from .AdjectivesTranslate import AdjectivesTranslate
 from .AdverbsTranslate import AdverbsTranslate
-
+from .Phrases import Phrases
 from .Test import Test

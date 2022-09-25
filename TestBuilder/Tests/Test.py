@@ -1,5 +1,5 @@
 import os
-from abc import abstractmethod
+from abc import abstractmethod, abstractproperty
 from typing import Tuple
 
 from kivy.lang import Builder
@@ -14,7 +14,7 @@ LAYOUTS_PATH = r"GUI\layouts\tests"
 
 class Test(BoxLayout):
     _LAYOUT_FILE: str
-    EXPERIMENTAL_PRIORITIZE = True  # From two random words select ones that were shown less times
+    EXPERIMENTAL_PRIORITIZE = True  # From two random words select ones that were shown fewer times
 
     def __init__(self, footer, dictionary, **kwargs):
         Builder.load_file(self.LAYOUT_FILE)
@@ -27,13 +27,6 @@ class Test(BoxLayout):
 
         self._earned_points = 1
 
-    @property
-    def earned_points(self):
-        return self._earned_points
-
-    def subtract_points(self, points):
-        self._earned_points -= points
-
     def unload(self):
         Builder.unload_file(self.LAYOUT_FILE)
         print(f"Unloaded file: {self.LAYOUT_FILE}")
@@ -42,46 +35,6 @@ class Test(BoxLayout):
     def LAYOUT_FILE(self):
         root_dir = os.getcwd()
         return os.path.join(root_dir, LAYOUTS_PATH, self._LAYOUT_FILE)
-
-    @staticmethod
-    @abstractmethod
-    def _compare(word1: Word, word2):
-        pass
-
-    @abstractmethod
-    def check(self, user_guess):
-        """
-        :param user_guess: user's input in the fields genus and singular
-        :return: the list of fields' ids that are incorrect, the earned points
-        """
-        pass
-
-    @abstractmethod
-    def _clear(self):
-        self._focus()
-
-        self._hint_opened = set()
-        self._hint_chars_to_open = 1
-
-        self._hint_button.disabled = True
-        self._hint_button.opacity = 0
-
-        self._earned_points = 1
-
-    @abstractmethod
-    def _focus(self):
-        pass
-
-    def enable_hint_button(self):
-        self._hint_button.disabled = False
-        self._hint_button.opacity = 1
-
-    def submit(self):
-        self._submit_button.dispatch('on_release')
-
-    @abstractmethod
-    def _from_series(self, word_series):
-        pass
 
     def __next__(self):
         _, word = next(self.dictionary)
@@ -96,17 +49,19 @@ class Test(BoxLayout):
     def __iter__(self):
         return self
 
-    @abstractmethod
-    def _get_word_for_hint(self) -> str:
-        pass
+    def submit(self):
+        self._submit_button.dispatch('on_release')
 
-    @abstractmethod
-    def get_user_input(self) -> Tuple:
-        pass
+    @property
+    def earned_points(self):
+        return self._earned_points
 
-    @abstractmethod
-    def _set_hint(self, hint: str):
-        pass
+    def subtract_points(self, points):
+        self._earned_points -= points
+
+    def enable_hint_button(self):
+        self._hint_button.disabled = False
+        self._hint_button.opacity = 1
 
     def hint(self):
         word_for_hint = self._get_word_for_hint()
@@ -128,7 +83,7 @@ class Test(BoxLayout):
 
         self.subtract_points(1)
         if "_" not in hint:
-            self._earned_points -= 1
+            self.subtract_points(1)
 
         self._set_hint(hint.rstrip())
         self._focus()
@@ -137,3 +92,49 @@ class Test(BoxLayout):
         for id in ids:
             assert isinstance(self.ids[id], MDTextField), "Only TextFields can be highlighted!"
             self.ids[id].error = True
+
+    @abstractmethod
+    def _clear(self):
+        self._focus()
+
+        self._hint_opened = set()
+        self._hint_chars_to_open = 1
+
+        self._hint_button.disabled = True
+        self._hint_button.opacity = 0
+
+        self._earned_points = 1
+
+    @abstractmethod
+    def _focus(self):
+        pass
+
+    @abstractmethod
+    def check(self, user_guess):
+        """
+        Initiates the check of correctness of the user's guess
+        :param user_guess: user's input in the fields genus and singular
+        :return: the list of fields' ids that are incorrect
+        """
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def _compare(word1: Word, word2):
+        pass
+
+    @abstractmethod
+    def _from_series(self, word_series):
+        pass
+
+    @abstractmethod
+    def get_user_input(self) -> Tuple:
+        pass
+
+    @abstractmethod
+    def _get_word_for_hint(self) -> str:
+        pass
+
+    @abstractmethod
+    def _set_hint(self, hint: str):
+        pass

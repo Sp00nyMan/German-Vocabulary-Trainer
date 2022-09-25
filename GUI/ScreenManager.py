@@ -43,18 +43,17 @@ class ScreenManager(KivySM):
         else:
             return False
 
-    def load(self, category: str, test_id: str):
-        print(category, test_id)
-        if category.lower() == 'party':
-            self._reload_test_screen()
-            self._party_load()
-            self.current = TestScreen.NAME
-        elif category.lower() in TestBuilder.TEST_CATEGORIES:
+    def load(self, test_id: str):
+        if test_id in TestBuilder.get_test_groups():
             self._reload_main_menu(test_id)
             self.current = MainMenuScreen.NAME
         else:
             self._reload_test_screen()
-            self.test_screen.load(TestBuilder.get_test(test_id, self.test_screen))
+            if test_id in TestBuilder.get_all_tests():
+                test_obj = TestBuilder.get_test(test_id, self.test_screen)
+                self.test_screen.load(test_obj)
+            else:
+                self._party_load()
             self.current = TestScreen.NAME
 
     def _reload_test_screen(self):
