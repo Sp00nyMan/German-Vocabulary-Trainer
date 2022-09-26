@@ -76,7 +76,7 @@ class Test(BoxLayout):
 
         hint = ""
         for c in word_for_hint:
-            hint += (c if c in self._hint_opened or c.lower() in self._hint_opened else '_') + ' '
+            hint += (c if c.lower() in self._hint_opened else '_') + ' '
 
         if self._hint_chars_to_open < chars_count:
             self._hint_chars_to_open += 0.5
