@@ -133,5 +133,5 @@ def get_adverbs() -> Iterable:
 
 
 def get_phrases():
-    df = _sheet_to_table(_workbook.sheetnames[5])
+    df = _sheet_to_table(_workbook.sheetnames[6])
     return _df_to_iter(df)

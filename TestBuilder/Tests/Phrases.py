@@ -32,9 +32,9 @@ class Phrases(Test):
 
     def check(self, user_guess):
         compare_result = Phrases._compare(self._last_word, user_guess)
-        if not compare_result:
-            return [compare_result]
-        return []
+        if compare_result is True:
+            return []
+        return [compare_result]
 
     def _clear(self):
         super()._clear()
@@ -58,7 +58,7 @@ class Phrases(Test):
 
     def hint(self):
         words_for_hint = self._get_word_for_hint().split(' ')
-        if self._hint_chars_to_open >= len(words_for_hint):
+        if self._hint_chars_to_open > len(words_for_hint):
             return
         hint = " ".join(words_for_hint[:self._hint_chars_to_open])
 
