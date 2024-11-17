@@ -2,7 +2,7 @@ from Entities import Word
 
 
 class Adverb(Word):
-    def __init__(self, adjective: str, translation: str, synonyms: str):
+    def __init__(self, adjective: str, translation: str, synonyms: str, gegenteile: str = None):
         super().__init__(translation, synonyms)
         self._adverb = adjective.strip().lower()
 

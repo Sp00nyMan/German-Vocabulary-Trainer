@@ -1,7 +1,10 @@
+from enum import Enum
 from DataLoader import get_nouns
 from Entities import Word, Noun
 from .Test import Test
 
+class PluralForm(Enum):
+    pass #TODO
 
 class NounsPlural(Test):
     _LAYOUT_FILE = "nouns_plural.kv"

@@ -33,7 +33,7 @@ class VerbsTranslate(Test):
     def _compare(word1: Verb, word2):
         assert isinstance(word1, Verb)
         if isinstance(word2, tuple):
-            word2 = Verb(word2[0], None, None)
+            word2 = Verb(word2[0], None)
         if isinstance(word2, Verb):
             return word1.infinitive == word2.infinitive
         raise ValueError(f"word2 has unsupported type: {type(word2)}")

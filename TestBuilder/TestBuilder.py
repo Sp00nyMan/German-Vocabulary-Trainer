@@ -3,7 +3,7 @@ from typing import List
 import pandas as pd
 
 from .Tests import NounsTranslate, VerbsTranslate, AdjectivesTranslate, AdverbsTranslate, \
-    NounsPlural, NounsGenus, VerbsKonjugate, Test, Phrases
+    NounsPlural, NounsGenus, Test, Phrases
 
 
 class TestMode:
@@ -32,7 +32,6 @@ TESTS = pd.DataFrame(data=[["nouns_übersetzen", NounsTranslate, "substantive", 
                            ["nouns_plural", NounsPlural, "substantive", "Nouns Plural"],
                            ["nouns_genus", NounsGenus, "substantive", "Nouns Genus"],
                            ["verbs_übersetzen", VerbsTranslate, "verben", "Verbs Übersetzen"],
-                           ["verbs_konjugate", VerbsKonjugate, "verben", "Verbs Konjugate"],
                            ["adjectives_übersetzen", AdjectivesTranslate, "adjektive", "Adjektive Übersetzen"],
                            ["adverbs_übersetzen", AdverbsTranslate, "adverben", "Adverben Übersetzen"],
                            ["phrases", Phrases, None, "Phrases"]],

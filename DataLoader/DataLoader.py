@@ -1,8 +1,8 @@
 import pandas as pd
 from typing import List, Iterable
 from openpyxl import load_workbook, Workbook
-
-DATA_PATH = r"G:\My Drive\Deutsch\Wortschatz.xlsx"
+from config import VOCABULARY as DATA_PATH
+from config import VOCABULARY_STRUCTURE
 
 """ LOADING SECTION """
 _workbook: Workbook = None
@@ -41,19 +41,19 @@ def _df_to_iter(df: pd.DataFrame) -> Iterable:
     return df
 
 
-def _sheet_to_table(sheet_name: str) -> pd.DataFrame:
+def _sheet_to_table(sheet_name: str, columns_cutoff: int) -> pd.DataFrame:
     if sheet_name in __data_cache:
         return __data_cache[sheet_name]
 
     sheet = _workbook[sheet_name]
     rows = iter(sheet.rows)
-    columns = _row_to_list(next(rows))
+    columns = _row_to_list(next(rows))[:columns_cutoff]
 
     print(f"Loaded sheet: {sheet.title} (columns: {columns})")
 
     rows_list = []
     for row in rows:
-        data = _row_to_list(row)
+        data = _row_to_list(row[:columns_cutoff])
         if not any(data):
             break
         rows_list.append(data)
@@ -64,74 +64,26 @@ def _sheet_to_table(sheet_name: str) -> pd.DataFrame:
     return df
 
 
-def __parse_irregular_verb(rows):
-    for row in rows:
-        verb = []
-        row = _row_to_list(row)
-        if not any(row):
-            return
-        verb.append(row[0])
-        verb.append(row[1])
-        verb.append(row[3])
-        verb.append(row[4])
-        row = _row_to_list(next(rows))
-        verb.insert(2, row[1])
-        row = _row_to_list(next(rows))
-        verb.insert(3, row[1])
-        verb.insert(4, row[2])
-        yield verb
-
-
-def _load_irregular_verbs() -> pd.DataFrame:
-    sheet_name = _workbook.sheetnames[2]
-
-    if sheet_name in __data_cache:
-        return __data_cache[sheet_name]
-
-    sheet = _workbook[sheet_name]
-    rows = iter(__parse_irregular_verb(sheet.rows))
-    columns = next(rows)
-    print(f"Loaded sheet: {sheet.title} (columns: {columns})")
-
-    df = pd.DataFrame(list(rows), columns=list(map(str.lower, columns)), dtype=str)
-    __data_cache[sheet_name] = df
-
-    return df
-
-
 def get_nouns() -> Iterable:
-    df = _sheet_to_table(_workbook.sheetnames[0])
+    df = _sheet_to_table(_workbook.sheetnames[VOCABULARY_STRUCTURE["noun"][0]], VOCABULARY_STRUCTURE["noun"][1])
     return _df_to_iter(df)
 
 
 def get_verbs() -> Iterable:
-    regular = _sheet_to_table(_workbook.sheetnames[1])
-    irregular = _load_irregular_verbs()
-    irregular = irregular.drop(columns=['präsens', 'präteritum', 'haben/sein', 'partizip ii'])
-    df = pd.concat((regular, irregular))
-    return _df_to_iter(df)
-
-
-def get_regular_verbs() -> Iterable:
-    df = _sheet_to_table(_workbook.sheetnames[1])
-    return _df_to_iter(df)
-
-
-def get_irregular_verbs() -> Iterable:
-    df = _load_irregular_verbs()
-    return _df_to_iter(df)
+    verbs = _sheet_to_table(_workbook.sheetnames[VOCABULARY_STRUCTURE["verb"][0]], VOCABULARY_STRUCTURE["verb"][1])
+    return _df_to_iter(verbs)
 
 
 def get_adjectives() -> Iterable:
-    df = _sheet_to_table(_workbook.sheetnames[3])
+    df = _sheet_to_table(_workbook.sheetnames[VOCABULARY_STRUCTURE["adjektiv"][0]], VOCABULARY_STRUCTURE['adjektiv'][1])
     return _df_to_iter(df)
 
 
 def get_adverbs() -> Iterable:
-    df = _sheet_to_table(_workbook.sheetnames[4])
+    df = _sheet_to_table(_workbook.sheetnames[VOCABULARY_STRUCTURE["adverb"][0]], VOCABULARY_STRUCTURE['adverb'][1])
     return _df_to_iter(df)
 
 
 def get_phrases():
-    df = _sheet_to_table(_workbook.sheetnames[6])
+    df = _sheet_to_table(_workbook.sheetnames[VOCABULARY_STRUCTURE["phrase"][0]], VOCABULARY_STRUCTURE['phrase'][1])
     return _df_to_iter(df)
